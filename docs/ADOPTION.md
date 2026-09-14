@@ -1,14 +1,45 @@
 # 설치와 적용 확인
 
-## 새 프로젝트
+## 새 프로젝트: 패치 없이 설치합니다
 
-저장소의 신뢰한 revision을 로컬에 두고 Python 3.10 이상으로 실행합니다.
+하네스 원본을 전체 clone하거나 ZIP으로 받아 압축을 풉니다. **새 프로젝트는 설치 대상이지
+원본 스킬을 찾는 위치가 아닙니다.** 이전 하네스, `.agents`, Git 저장소가 없어도 됩니다.
+원본과 대상을 별도 디렉터리에 두고 Python 3.10 이상으로 실행하십시오.
+
 ```sh
-python3 scripts/install.py /absolute/path/to/project --profile astra --dry-run
-python3 scripts/install.py /absolute/path/to/project --profile astra
+git clone https://github.com/jyb1018/AI-Development-harness.git "$HOME/AI-Development-harness"
+mkdir -p "$HOME/my-new-project"
+python3 "$HOME/AI-Development-harness/scripts/install.py" "$HOME/my-new-project" --profile astra --dry-run
+python3 "$HOME/AI-Development-harness/scripts/install.py" "$HOME/my-new-project" --profile astra
 ```
+
+전체 ZIP으로 받은 경우에도 같은 설치기를 사용합니다. 원본의 `skills/`에서 읽어
+대상의 `.agents/skills/`에 복사하므로 현재 작업 디렉터리는 관계없습니다.
+`--profile sol` 또는 `--profile generic`도 새 프로젝트에서 동일하게 지원합니다.
 대상 디렉터리는 이미 존재해야 합니다. 설치기는 네트워크·sudo·전역 설정을 사용하지 않습니다.
 루트, 자기 저장소 내부, symlink를 통한 목적지 이동은 거부합니다.
+
+### 원본 누락 오류
+
+`Incomplete harness source package` 또는 `Missing source: skills/.../SKILL.md`는
+**설치 원본이 불완전하다는 뜻**입니다. 대상에 가짜 스킬 파일을 만들거나 검사를 끄지 마십시오.
+`install.py` 하나나 `.patch`만 실행하지 말고 전체 clone/ZIP을 다시 확보하십시오.
+`.patch`는 기존 하네스 저장소에 변경을 적용하는 용도이며 제품 프로젝트의 설치기가 아닙니다.
+
+초기 v2.0 공개 트리에는 `.agents/skills/`가 누락되어 빈 프로젝트 설치가 실패했습니다.
+v2.0.1부터는 원본을 일반 `skills/` 폴더에 포함하고 설치 전에 필요한 파일을 모두 확인합니다.
+원본 누락이 있으면 대상에 아무 파일도 쓰지 않고 종료합니다.
+
+### 설치 확인
+
+설치 후 `AGENTS.md`, `.universal-harness/profile.md`, `.universal-harness/STATE.json`,
+그리고 `.agents/skills/uh-*/SKILL.md` 일곱 개가 생성됩니다. 숨김 폴더는 파일 탐색기에서
+보이지 않을 수 있으므로 터미널에서도 확인할 수 있습니다.
+
+```sh
+ls -la "$HOME/my-new-project"
+find "$HOME/my-new-project/.agents/skills" -name SKILL.md
+```
 
 ## 기존 프로젝트
 

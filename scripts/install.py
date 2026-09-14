@@ -62,20 +62,43 @@ def read_state(target: Path) -> dict:
     return state
 
 
+def require_source_files(relative_paths: list[str]) -> None:
+    """Preflight the distribution, never demand skills in the target project."""
+    missing = []
+    for relative in relative_paths:
+        source = ROOT / relative
+        for component in (source, *source.parents):
+            if component == ROOT:
+                break
+            if component.is_symlink():
+                raise ValueError(f'Symlink source refused: {relative}')
+        if not source.is_file():
+            missing.append(relative)
+    if missing:
+        raise ValueError(
+            'Incomplete harness source package; no files written.\n'
+            + '\n'.join(f'Missing source: {relative}' for relative in missing)
+            + '\nUse a complete repository clone or extracted ZIP containing '
+              'skills/, profiles/, harness.json and AGENTS.template.md. '
+              'Run that copy of scripts/install.py with your empty project as '
+              'the target. A .patch or install.py alone is not an installer package.'
+        )
+
+
 def package_files(profile: str) -> tuple[dict, dict[str, bytes]]:
+    require_source_files(['harness.json'])
     meta = json.loads((ROOT / 'harness.json').read_text(encoding='utf-8'))
     if meta.get('schema_version') != 2 or profile not in meta['profiles']:
         raise ValueError('Unsupported package/profile')
-    paths = {'.universal-harness/profile.md': (ROOT / 'profiles' / f'{profile}.md').read_bytes()}
+    # Visible source payload survives copying without hidden directories.
+    # The installed layout remains the host's .agents/skills convention.
+    sources = {'.universal-harness/profile.md': f'profiles/{profile}.md'}
     for name in meta['skills']:
         if not re.fullmatch(r'uh-[a-z0-9-]+', name):
             raise ValueError('Invalid skill name')
-        rel = f'.agents/skills/{name}/SKILL.md'
-        source = ROOT / rel
-        if source.is_symlink():
-            raise ValueError(f'Symlink source refused: {rel}')
-        paths[rel] = source.read_bytes()
-    return meta, paths
+        sources[f'.agents/skills/{name}/SKILL.md'] = f'skills/{name}/SKILL.md'
+    require_source_files(['AGENTS.template.md', *sources.values()])
+    return meta, {rel: (ROOT / source).read_bytes() for rel, source in sources.items()}
 
 
 def plan_install(target: Path, profile: str, upgrade: bool) -> tuple[dict[str, bytes], dict]:
@@ -152,7 +175,7 @@ def install(target: Path, profile: str, upgrade: bool = False, dry_run: bool = F
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('target')
+    parser.add_argument('target', help='Existing project directory; may be completely empty (no Git or prior harness needed)')
     parser.add_argument('--profile', choices=('generic', 'sol', 'astra'), default='generic')
     parser.add_argument('--dry-run', action='store_true')
     parser.add_argument('--upgrade', action='store_true')

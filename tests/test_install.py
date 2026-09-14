@@ -145,7 +145,7 @@ class InstallTests(unittest.TestCase):
         state['files']['.agents/skills/uh-debug/SKILL.md'] = installer.digest(file.read_bytes())
         path.write_text(json.dumps(state), encoding='utf-8')
         self.run_install(upgrade=True)
-        self.assertEqual(file.read_bytes(), (installer.ROOT / '.agents/skills/uh-debug/SKILL.md').read_bytes())
+        self.assertEqual(file.read_bytes(), (installer.ROOT / 'skills/uh-debug/SKILL.md').read_bytes())
 
     def test_cli_invalid_profile(self):
         result = subprocess.run([sys.executable, str(installer.ROOT / 'scripts/install.py'),

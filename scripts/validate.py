@@ -36,14 +36,17 @@ def validate(root: Path) -> list[str]:
             if not re.fullmatch(r'uh-[a-z0-9-]+', name):
                 errors.append(f'Invalid skill name: {name}')
                 continue
-            path = root / '.agents/skills' / name / 'SKILL.md'
+            path = root / 'skills' / name / 'SKILL.md'
+            if not path.is_file():
+                errors.append(f'Missing skill source: skills/{name}/SKILL.md')
+                continue
             text = path.read_text(encoding='utf-8')
             header = re.match(r'\A---\nname: ([a-z0-9-]+)\ndescription: ([^\n]+)\n---\n', text)
             if not header or header[1] != name or len(header[2]) > 1024:
                 errors.append(f'Invalid skill frontmatter: {name}')
             if path.stat().st_size > meta['limits']['skill_bytes']:
                 errors.append(f'Skill exceeds instruction budget: {name}')
-        actual = {p.parent.name for p in (root / '.agents/skills').glob('*/SKILL.md')}
+        actual = {p.parent.name for p in (root / 'skills').glob('*/SKILL.md')}
         if actual != set(meta['skills']):
             errors.append('Skill inventory mismatch')
         for profile in meta['profiles']:

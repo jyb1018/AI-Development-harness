@@ -34,8 +34,13 @@ class ValidateTests(unittest.TestCase):
         self.assertTrue(any('Broken file link' in s for s in validate.validate(self.root)))
 
     def test_invalid_frontmatter(self):
-        (self.root / '.agents/skills/uh-debug/SKILL.md').write_text('no metadata', encoding='utf-8')
+        (self.root / 'skills/uh-debug/SKILL.md').write_text('no metadata', encoding='utf-8')
         self.assertIn('Invalid skill frontmatter: uh-debug', validate.validate(self.root))
+
+    def test_missing_skill_source(self):
+        (self.root / 'skills/uh-debug/SKILL.md').unlink()
+        self.assertIn('Missing skill source: skills/uh-debug/SKILL.md',
+                      validate.validate(self.root))
 
     def test_budget_limit(self):
         (self.root / 'AGENTS.template.md').write_text('x' * 6501, encoding='utf-8')
