@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.0.1 — 2026-09-14
+
+- Fix fresh installation from the published source tree, which lacked the hidden
+  `.agents/skills` payload. Restore all seven original v2 skills unchanged under
+  visible `skills/`; install them into the target's `.agents/skills/` as before.
+- Preflight source completeness and explain clone/ZIP versus patch-only usage
+  before writing any target files. Installation does not require prior skills,
+  a v1 harness, Git history, or running from a particular working directory.
+- Restore the omitted validation workflow and ignore file. Add CLI regression
+  coverage for all profiles, visible-only copies, extracted ZIPs, missing payload,
+  and existing-install compatibility. No model-policy/profile changes.
+
 ## 2.0.0 — 2026-09-14
 
 - First repository release; replaces the earlier 1.0.0 conversation ZIP design.

@@ -17,30 +17,45 @@ Karpathy식 가정 확인·작은 변경·결과 검증을 핵심에 통합하�
 공식 지침과 실제 작업 결과를 분리하고, 모델·호스트·하네스를 따로 비교합니다.
 현재 상태는 **구성/설치 검증 대상이며 Sol/Astra 실사용 성능 인증은 미수행**입니다.
 
-## 설치
+## 설치 — 빈 프로젝트도 지원합니다
 
-Python 3.10 이상, 외부 Python 패키지나 API 키는 필요 없습니다.
-신뢰한 revision의 저장소를 받은 뒤 로컬에서 실행합니다.
-
-```sh
-python3 scripts/install.py /path/to/project --profile astra --dry-run
-python3 scripts/install.py /path/to/project --profile astra
-# Sol 환경에서는 --profile sol, 모델 중립 환경에서는 --profile generic
-```
-
-설치 대상은 `AGENTS.md`, 이름 충돌을 피한 `.agents/skills/uh-*`,
-`.universal-harness/profile.md` 및 설치 상태 파일뿐입니다.
-기존 AGENTS가 있으면 덮어쓰지 않고 `.universal-harness/AGENTS.proposed.md`를 만듭니다.
-이 경우 **자동 적용 완료가 아니라 수동 병합 필요**라고 보고합니다.
-기존 스킬·전역 설정·CI·비밀값·프로젝트 코드는 변경하지 않습니다.
+Python 3.10 이상이면 됩니다. **이 저장소는 완전한 설치 원본이며, 이전 하네스나 스킬이 필요하지 않습니다.**
+`.patch`는 하네스 저장소 수정용 파일일 뿐입니다. 새 프로젝트에 패치를 적용하거나
+`install.py` 하나만 복사하지 말고 **전체 clone 또는 ZIP**을 사용하십시오.
 
 ```sh
-# 기존 설치의 관리 파일을 업데이트: 사용자가 수정한 파일은 충돌로 중단
-python3 scripts/install.py /path/to/project --profile sol --upgrade --dry-run
-python3 scripts/install.py /path/to/project --profile sol --upgrade
+# 하네스 원본과 대상 프로젝트를 서로 다른 디렉터리에 둡니다.
+git clone https://github.com/jyb1018/AI-Development-harness.git "$HOME/AI-Development-harness"
+mkdir -p "$HOME/my-new-project"
+
+python3 "$HOME/AI-Development-harness/scripts/install.py" "$HOME/my-new-project" --profile astra --dry-run
+python3 "$HOME/AI-Development-harness/scripts/install.py" "$HOME/my-new-project" --profile astra
+# Sol은 --profile sol, 모델 중립 환경은 --profile generic
 ```
 
-[설치/활성화 확인](docs/ADOPTION.md) · [v1/두꺼운 하네스에서 이관](docs/MIGRATION.md)
+Git이 없어도 전체 ZIP을 풀고 위 명령의 원본 경로만 바꾸면 됩니다.
+실행 위치는 어디든 가능하며, 대상은 이미 존재하는 빈 폴더여도 됩니다.
+원본에는 `skills/`, `profiles/`, `harness.json`, `AGENTS.template.md`, `scripts/`가 함께 있어야 합니다.
+
+```text
+하네스 원본                         설치 후 대상 프로젝트
+skills/uh-*/SKILL.md       ─────→  .agents/skills/uh-*/SKILL.md
+AGENTS.template.md        ─────→  AGENTS.md
+profiles/astra.md         ─────→  .universal-harness/profile.md
+                                 .universal-harness/STATE.json
+```
+
+원본 스킬은 **숨김 폴더가 아닌 `skills/`**에 있습니다. 대상의 `.agents/`는 설치기가 만듭니다.
+기존 `AGENTS.md`가 있으면 보존하고 `.universal-harness/AGENTS.proposed.md`를 만들어
+수동 병합 필요 상태를 알립니다. 기존 스킬·전역 설정·CI·비밀값·프로젝트 코드는 변경하지 않습니다.
+
+```sh
+# v2 기존 설치 업데이트: 사용자가 수정한 파일은 덮어쓰지 않습니다.
+python3 "$HOME/AI-Development-harness/scripts/install.py" /path/to/project --profile sol --upgrade --dry-run
+python3 "$HOME/AI-Development-harness/scripts/install.py" /path/to/project --profile sol --upgrade
+```
+
+[설치/활성화 확인 및 오류 해결](docs/ADOPTION.md) · [v1/두꺼운 하네스에서 이관](docs/MIGRATION.md)
 
 ## 평소 작업
 
