@@ -1,0 +1,29 @@
+{
+  "schema_version": 2,
+  "version": "2.0.0",
+  "core": "AGENTS.template.md",
+  "profiles": [
+    "generic",
+    "sol",
+    "astra"
+  ],
+  "skills": [
+    "uh-karpathy",
+    "uh-ponytail",
+    "uh-debug",
+    "uh-tdd",
+    "uh-integration",
+    "uh-review",
+    "uh-model-upgrade"
+  ],
+  "limits": {
+    "core_bytes": 6500,
+    "skill_bytes": 4000
+  },
+  "behavioral_validation": {
+    "sol": "not_run",
+    "astra": "not_run"
+  },
+  "runtime_configuration_managed": false,
+  "upstream_plugins_vendored": false
+}
