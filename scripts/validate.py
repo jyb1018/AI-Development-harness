@@ -14,7 +14,7 @@ def validate(root: Path) -> list[str]:
     required = ['README.md', 'LICENSE', 'VERSION', 'AGENTS.md', 'AGENTS.template.md',
                 'harness.json', 'docs/SOURCES.md', 'docs/ADOPTION.md', 'docs/MIGRATION.md',
                 'docs/MODELS.md', 'docs/MODEL-UPGRADES.md', 'evals/README.md', 'evals/cases.json',
-                'scripts/install.py', 'scripts/validate.py', '.github/workflows/validate.yml']
+                'evals/run-record.template.json', 'scripts/install.py', 'scripts/validate.py', '.github/workflows/validate.yml']
     for rel in required:
         if not (root / rel).is_file():
             errors.append(f'Missing: {rel}')
@@ -23,6 +23,7 @@ def validate(root: Path) -> list[str]:
     try:
         meta = json.loads((root / 'harness.json').read_text(encoding='utf-8'))
         cases = json.loads((root / 'evals/cases.json').read_text(encoding='utf-8'))
+        record = json.loads((root / 'evals/run-record.template.json').read_text(encoding='utf-8'))
         if meta['schema_version'] != 2 or cases['schema_version'] != 2:
             errors.append('Unsupported schema')
         if meta['version'] != (root / 'VERSION').read_text(encoding='utf-8').strip():
@@ -60,6 +61,36 @@ def validate(root: Path) -> list[str]:
                 errors.append(f'Invalid eval: {case["id"]}')
         if cases['kind'] != 'behavioral_scenarios_not_execution_results':
             errors.append('Eval evidence type missing')
+        host_case_ids = {'host-reasoning-summary', 'host-empty-continuation', 'host-native-verification'}
+        missing_host_cases = sorted(host_case_ids - set(ids))
+        if missing_host_cases:
+            errors.append('Missing host regression eval IDs: ' + ', '.join(missing_host_cases))
+
+        if record.get('schema_version') != 1 or record.get('kind') != 'behavioral_evaluation_run_record':
+            errors.append('Invalid eval run-record schema')
+        else:
+            def require_keys(obj, keys, label):
+                if not isinstance(obj, dict):
+                    errors.append(f'Invalid eval run-record section: {label}')
+                    return
+                missing = [key for key in keys if key not in obj]
+                if missing:
+                    errors.append(f'Missing eval run-record keys in {label}: ' + ', '.join(missing))
+
+            require_keys(record, ['run_id', 'case_id', 'started_at', 'setup', 'results'], 'root')
+            setup = record.get('setup', {})
+            require_keys(setup, ['model', 'model_alias_or_snapshot', 'reasoning_effort', 'host',
+                                 'effective_config', 'harness', 'project', 'permissions', 'tools'], 'setup')
+            require_keys(setup.get('host', {}), ['name', 'version', 'platform'], 'setup.host')
+            require_keys(setup.get('effective_config', {}),
+                         ['model_reasoning_summary', 'other_request_affecting_overrides'],
+                         'setup.effective_config')
+            require_keys(setup.get('harness', {}), ['version', 'revision', 'profile'], 'setup.harness')
+            require_keys(setup.get('project', {}), ['repository', 'revision'], 'setup.project')
+            require_keys(record.get('results', {}),
+                         ['acceptance', 'safety_violations', 'avoidable_questions',
+                          'unnecessary_scope_or_ceremony', 'command_exits', 'wall_time_seconds',
+                          'usage', 'notes'], 'results')
     except (OSError, ValueError, KeyError, TypeError) as exc:
         errors.append(f'Metadata error: {exc}')
     # Check committed Markdown relative file links, not external availability/anchors.

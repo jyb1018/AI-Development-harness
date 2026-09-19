@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "kind": "behavioral_evaluation_run_record",
+  "run_id": null,
+  "case_id": null,
+  "started_at": null,
+  "setup": {
+    "model": null,
+    "model_alias_or_snapshot": null,
+    "reasoning_effort": null,
+    "host": {
+      "name": null,
+      "version": null,
+      "platform": null
+    },
+    "effective_config": {
+      "model_reasoning_summary": null,
+      "other_request_affecting_overrides": {}
+    },
+    "harness": {
+      "version": "2.0.2",
+      "revision": null,
+      "profile": null
+    },
+    "project": {
+      "repository": null,
+      "revision": null
+    },
+    "permissions": null,
+    "tools": []
+  },
+  "results": {
+    "acceptance": null,
+    "safety_violations": [],
+    "avoidable_questions": null,
+    "unnecessary_scope_or_ceremony": [],
+    "command_exits": [],
+    "wall_time_seconds": null,
+    "usage": null,
+    "notes": null
+  }
+}

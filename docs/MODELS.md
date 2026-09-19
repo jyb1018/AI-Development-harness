@@ -30,6 +30,19 @@ API 파라미터, max/ultra 또는 tool availability를 변경하지 않습니�
 API와 Codex UI의 설정 이름이 같다고 가정하지 않습니다.
 호스트가 새 도구를 제공해도 공개/유료/파괴적 동작의 권한이 자동 확대되지는 않습니다.
 
+## Host/runtime 버전도 평가 변수입니다
+
+같은 모델·하네스·프로젝트라도 Codex 같은 호스트의 **patch version과 기본 요청 설정**이
+달라지면 결과가 달라질 수 있습니다. 따라서 모델 비교 기록에는 `evals/run-record.template.json`을
+사용해 정확한 host version, platform, reasoning effort와 request-affecting effective config를
+별도 필드로 남깁니다. `model_reasoning_summary`처럼 호스트가 기본값을 바꿀 수 있는 설정은
+모델 성격이나 하네스 회귀로 합쳐서 기록하지 않습니다.
+
+호스트 업데이트 직후 문제가 생겼다면 우선 같은 모델·하네스·project revision에서 host/config만
+분리해 비교합니다. 공식 릴리스 노트나 source diff는 가설의 근거가 될 수 있지만, 실제 provider
+재현이 불가능하면 그 경계는 `unknown`으로 남깁니다. host가 native loop protection이나
+user verification을 제공할 때도 하네스가 이를 우회하거나 중복 구현하지 않습니다.
+
 ## 이전 분석의 정정
 
 연동 실패 뒤에 모델 업그레이드가 있었다는 관찰만으로 업그레이드가 원인이라고 결론 내릴 수 없습니다.

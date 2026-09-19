@@ -7,8 +7,9 @@ description: Assess changed model, host, tool, skill-loading, or prompting behav
 
 Run on a relevant upgrade or measured regression, not on routine product edits.
 
-Identify the actual model/effort, host version, permissions, tools, installed
-plugins/hooks, core revision, and project task. Inspect relevant instruction
+Identify the actual model/effort, exact host patch version, platform, permissions,
+tools, installed plugins/hooks, core revision, and project task. Record effective
+request-affecting host/model config such as reasoning-summary settings when applicable. Inspect relevant instruction
 sources for duplicate or conflicting rules; report layers you cannot inspect.
 Do not assume all versions of a model alias or host behave identically.
 
