@@ -1,0 +1,9 @@
+{
+  "kind": "EXECUTED_DETERMINISTIC",
+  "skills": 1000,
+  "full_cli_bytes": 310330,
+  "summary_cli_bytes": 1413,
+  "reduction_percent": 99.54,
+  "same_route": true,
+  "provider_called": false
+}

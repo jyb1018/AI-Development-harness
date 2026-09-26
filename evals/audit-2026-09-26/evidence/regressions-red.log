@@ -1,0 +1,359 @@
+test_alias_visits_consume_scan_budget (test_audit_regressions.AuditRegressions.test_alias_visits_consume_scan_budget) ... FAIL
+test_dangling_skill_link_is_visible (test_audit_regressions.AuditRegressions.test_dangling_skill_link_is_visible) ... FAIL
+test_invalid_manifest_shapes_fail_before_target_writes (test_audit_regressions.AuditRegressions.test_invalid_manifest_shapes_fail_before_target_writes) ...
+  test_invalid_manifest_shapes_fail_before_target_writes (test_audit_regressions.AuditRegressions.test_invalid_manifest_shapes_fail_before_target_writes) (value=[]) ... ERROR
+  test_invalid_manifest_shapes_fail_before_target_writes (test_audit_regressions.AuditRegressions.test_invalid_manifest_shapes_fail_before_target_writes) (value=None) ... ERROR
+  test_invalid_manifest_shapes_fail_before_target_writes (test_audit_regressions.AuditRegressions.test_invalid_manifest_shapes_fail_before_target_writes) (value={'schema_version': 2, 'version': '3.0.0', 'core': 'AGENTS.template.md', 'profiles': ['generic', 'sol', 'astra'], 'skills': ['uh-karpathy', 'uh-ponytail', 'uh-debug', 'uh-tdd', 'uh-integration', 'uh-review', 'uh-model-upgrade', 'uh-tooling', 'uh-debug'], 'limits': {'core_bytes': 6500, 'skill_bytes': 4000}, 'behavioral_validation': {'sol': 'not_run', 'astra': 'not_run'}, 'runtime_configuration_managed': False, 'upstream_plugins_vendored': False, 'evaluation_record_template': 'evals/run-record.template.json', 'support_files': {'.universal-harness/tooling.py': 'scripts/tooling.py', '.universal-harness/tooling.json': 'integrations/tooling.json', '.universal-harness/TOOLING.md': 'docs/TOOLING.md'}, 'tooling_evaluation_cases': 'evals/tooling-cases.json'}) ... FAIL
+  test_invalid_manifest_shapes_fail_before_target_writes (test_audit_regressions.AuditRegressions.test_invalid_manifest_shapes_fail_before_target_writes) (value={'schema_version': 2, 'version': '3.0.0', 'core': 'AGENTS.template.md', 'profiles': 'generic', 'skills': ['uh-karpathy', 'uh-ponytail', 'uh-debug', 'uh-tdd', 'uh-integration', 'uh-review', 'uh-model-upgrade', 'uh-tooling'], 'limits': {'core_bytes': 6500, 'skill_bytes': 4000}, 'behavioral_validation': {'sol': 'not_run', 'astra': 'not_run'}, 'runtime_configuration_managed': False, 'upstream_plugins_vendored': False, 'evaluation_record_template': 'evals/run-record.template.json', 'support_files': {'.universal-harness/tooling.py': 'scripts/tooling.py', '.universal-harness/tooling.json': 'integrations/tooling.json', '.universal-harness/TOOLING.md': 'docs/TOOLING.md'}, 'tooling_evaluation_cases': 'evals/tooling-cases.json'}) ... FAIL
+  test_invalid_manifest_shapes_fail_before_target_writes (test_audit_regressions.AuditRegressions.test_invalid_manifest_shapes_fail_before_target_writes) (value={'schema_version': 2, 'version': '3.0.0', 'core': 'AGENTS.template.md', 'profiles': ['generic', 'sol', 'astra'], 'skills': ['uh-karpathy', 'uh-ponytail', 'uh-debug', 'uh-tdd', 'uh-integration', 'uh-review', 'uh-model-upgrade', 'uh-tooling'], 'limits': None, 'behavioral_validation': {'sol': 'not_run', 'astra': 'not_run'}, 'runtime_configuration_managed': False, 'upstream_plugins_vendored': False, 'evaluation_record_template': 'evals/run-record.template.json', 'support_files': {'.universal-harness/tooling.py': 'scripts/tooling.py', '.universal-harness/tooling.json': 'integrations/tooling.json', '.universal-harness/TOOLING.md': 'docs/TOOLING.md'}, 'tooling_evaluation_cases': 'evals/tooling-cases.json'}) ... FAIL
+test_invalid_source_skill_fails_before_target_writes (test_audit_regressions.AuditRegressions.test_invalid_source_skill_fails_before_target_writes) ...
+  test_invalid_source_skill_fails_before_target_writes (test_audit_regressions.AuditRegressions.test_invalid_source_skill_fails_before_target_writes) (raw=b'no frontmatter') ... FAIL
+SKILL SCAN INCOMPLETE: run tooling doctor --strict; unreadable/unsupported definitions were preserved.
+  test_invalid_source_skill_fails_before_target_writes (test_audit_regressions.AuditRegressions.test_invalid_source_skill_fails_before_target_writes) (raw=b'---\nname: wrong-name\ndescription: Demo\n---\n') ... FAIL
+SKILL SCAN INCOMPLETE: run tooling doctor --strict; unreadable/unsupported definitions were preserved.
+  test_invalid_source_skill_fails_before_target_writes (test_audit_regressions.AuditRegressions.test_invalid_source_skill_fails_before_target_writes) (raw=b'---\nname: uh-debug\n---\n') ... FAIL
+SKILL SCAN INCOMPLETE: run tooling doctor --strict; unreadable/unsupported definitions were preserved.
+  test_invalid_source_skill_fails_before_target_writes (test_audit_regressions.AuditRegressions.test_invalid_source_skill_fails_before_target_writes) (raw=b'\xff') ... FAIL
+SKILL SCAN INCOMPLETE: run tooling doctor --strict; unreadable/unsupported definitions were preserved.
+  test_invalid_source_skill_fails_before_target_writes (test_audit_regressions.AuditRegressions.test_invalid_source_skill_fails_before_target_writes) (raw=b'---\nname: uh-debug\ndescription: Demo\n---\nxxxxxxxxxxxxxxxxxxx') ... FAIL
+test_invalid_state_shapes_fail_cleanly_and_preserve_files (test_audit_regressions.AuditRegressions.test_invalid_state_shapes_fail_cleanly_and_preserve_files) ...
+  test_invalid_state_shapes_fail_cleanly_and_preserve_files (test_audit_regressions.AuditRegressions.test_invalid_state_shapes_fail_cleanly_and_preserve_files) (value=[]) ... FAIL
+  test_invalid_state_shapes_fail_cleanly_and_preserve_files (test_audit_regressions.AuditRegressions.test_invalid_state_shapes_fail_cleanly_and_preserve_files) (value=None) ... FAIL
+  test_invalid_state_shapes_fail_cleanly_and_preserve_files (test_audit_regressions.AuditRegressions.test_invalid_state_shapes_fail_cleanly_and_preserve_files) (value=True) ... FAIL
+  test_invalid_state_shapes_fail_cleanly_and_preserve_files (test_audit_regressions.AuditRegressions.test_invalid_state_shapes_fail_cleanly_and_preserve_files) (value='state') ... FAIL
+test_missing_empty_or_collection_description_is_not_routable (test_audit_regressions.AuditRegressions.test_missing_empty_or_collection_description_is_not_routable) ...
+  test_missing_empty_or_collection_description_is_not_routable (test_audit_regressions.AuditRegressions.test_missing_empty_or_collection_description_is_not_routable) (description='') ... FAIL
+  test_missing_empty_or_collection_description_is_not_routable (test_audit_regressions.AuditRegressions.test_missing_empty_or_collection_description_is_not_routable) (description='description:') ... FAIL
+  test_missing_empty_or_collection_description_is_not_routable (test_audit_regressions.AuditRegressions.test_missing_empty_or_collection_description_is_not_routable) (description='description: ""') ... FAIL
+  test_missing_empty_or_collection_description_is_not_routable (test_audit_regressions.AuditRegressions.test_missing_empty_or_collection_description_is_not_routable) (description='description: null') ... FAIL
+  test_missing_empty_or_collection_description_is_not_routable (test_audit_regressions.AuditRegressions.test_missing_empty_or_collection_description_is_not_routable) (description='description: [unterminated') ... FAIL
+  test_missing_empty_or_collection_description_is_not_routable (test_audit_regressions.AuditRegressions.test_missing_empty_or_collection_description_is_not_routable) (description='description: {}') ... FAIL
+  test_missing_empty_or_collection_description_is_not_routable (test_audit_regressions.AuditRegressions.test_missing_empty_or_collection_description_is_not_routable) (description='description: ok\ndescription: duplicate') ... FAIL
+  test_missing_empty_or_collection_description_is_not_routable (test_audit_regressions.AuditRegressions.test_missing_empty_or_collection_description_is_not_routable) (description='description: |') ... FAIL
+test_name_requires_yaml_separator (test_audit_regressions.AuditRegressions.test_name_requires_yaml_separator) ... FAIL
+test_quoted_and_multiline_descriptions_remain_supported (test_audit_regressions.AuditRegressions.test_quoted_and_multiline_descriptions_remain_supported) ... ok
+test_validator_reports_nonobject_record_and_setup (test_audit_regressions.AuditRegressions.test_validator_reports_nonobject_record_and_setup) ...
+  test_validator_reports_nonobject_record_and_setup (test_audit_regressions.AuditRegressions.test_validator_reports_nonobject_record_and_setup) (value=[]) ... ERROR
+  test_validator_reports_nonobject_record_and_setup (test_audit_regressions.AuditRegressions.test_validator_reports_nonobject_record_and_setup) (value=None) ... ERROR
+  test_validator_reports_nonobject_record_and_setup (test_audit_regressions.AuditRegressions.test_validator_reports_nonobject_record_and_setup) (value={'schema_version': 1, 'kind': 'behavioral_evaluation_run_record', 'run_id': None, 'case_id': None, 'started_at': None, 'setup': [], 'results': {'acceptance': None, 'safety_violations': [], 'avoidable_questions': None, 'unnecessary_scope_or_ceremony': [], 'command_exits': [], 'wall_time_seconds': None, 'usage': None, 'notes': None}}) ... ERROR
+  test_validator_reports_nonobject_record_and_setup (test_audit_regressions.AuditRegressions.test_validator_reports_nonobject_record_and_setup) (value={'schema_version': 1, 'kind': 'behavioral_evaluation_run_record', 'run_id': None, 'case_id': None, 'started_at': None, 'setup': None, 'results': {'acceptance': None, 'safety_violations': [], 'avoidable_questions': None, 'unnecessary_scope_or_ceremony': [], 'command_exits': [], 'wall_time_seconds': None, 'usage': None, 'notes': None}}) ... ERROR
+
+======================================================================
+ERROR: test_invalid_manifest_shapes_fail_before_target_writes (test_audit_regressions.AuditRegressions.test_invalid_manifest_shapes_fail_before_target_writes) (value=[])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<harness-checkout>/tests/test_audit_regressions.py", line 123, in test_invalid_manifest_shapes_fail_before_target_writes
+    installer.install(target, 'generic', global_skill_roots=[])
+  File "<harness-checkout>/scripts/install.py", line 191, in install
+    changed, state = plan_install(target, profile, upgrade, global_skill_roots)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<harness-checkout>/scripts/install.py", line 123, in plan_install
+    meta, wanted = package_files(profile)
+                   ^^^^^^^^^^^^^^^^^^^^^^
+  File "<harness-checkout>/scripts/install.py", line 91, in package_files
+    if meta.get('schema_version') != 2 or profile not in meta['profiles']:
+       ^^^^^^^^
+AttributeError: 'list' object has no attribute 'get'
+
+======================================================================
+ERROR: test_invalid_manifest_shapes_fail_before_target_writes (test_audit_regressions.AuditRegressions.test_invalid_manifest_shapes_fail_before_target_writes) (value=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<harness-checkout>/tests/test_audit_regressions.py", line 123, in test_invalid_manifest_shapes_fail_before_target_writes
+    installer.install(target, 'generic', global_skill_roots=[])
+  File "<harness-checkout>/scripts/install.py", line 191, in install
+    changed, state = plan_install(target, profile, upgrade, global_skill_roots)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<harness-checkout>/scripts/install.py", line 123, in plan_install
+    meta, wanted = package_files(profile)
+                   ^^^^^^^^^^^^^^^^^^^^^^
+  File "<harness-checkout>/scripts/install.py", line 91, in package_files
+    if meta.get('schema_version') != 2 or profile not in meta['profiles']:
+       ^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'
+
+======================================================================
+ERROR: test_validator_reports_nonobject_record_and_setup (test_audit_regressions.AuditRegressions.test_validator_reports_nonobject_record_and_setup) (value=[])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<harness-checkout>/tests/test_audit_regressions.py", line 133, in test_validator_reports_nonobject_record_and_setup
+    errors = validate.validate(package)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<harness-checkout>/scripts/validate.py", line 74, in validate
+    if record.get('schema_version') != 1 or record.get('kind') != 'behavioral_evaluation_run_record':
+       ^^^^^^^^^^
+AttributeError: 'list' object has no attribute 'get'
+
+======================================================================
+ERROR: test_validator_reports_nonobject_record_and_setup (test_audit_regressions.AuditRegressions.test_validator_reports_nonobject_record_and_setup) (value=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<harness-checkout>/tests/test_audit_regressions.py", line 133, in test_validator_reports_nonobject_record_and_setup
+    errors = validate.validate(package)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<harness-checkout>/scripts/validate.py", line 74, in validate
+    if record.get('schema_version') != 1 or record.get('kind') != 'behavioral_evaluation_run_record':
+       ^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'
+
+======================================================================
+ERROR: test_validator_reports_nonobject_record_and_setup (test_audit_regressions.AuditRegressions.test_validator_reports_nonobject_record_and_setup) (value={'schema_version': 1, 'kind': 'behavioral_evaluation_run_record', 'run_id': None, 'case_id': None, 'started_at': None, 'setup': [], 'results': {'acceptance': None, 'safety_violations': [], 'avoidable_questions': None, 'unnecessary_scope_or_ceremony': [], 'command_exits': [], 'wall_time_seconds': None, 'usage': None, 'notes': None}})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<harness-checkout>/tests/test_audit_regressions.py", line 133, in test_validator_reports_nonobject_record_and_setup
+    errors = validate.validate(package)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<harness-checkout>/scripts/validate.py", line 89, in validate
+    require_keys(setup.get('host', {}), ['name', 'version', 'platform'], 'setup.host')
+                 ^^^^^^^^^
+AttributeError: 'list' object has no attribute 'get'
+
+======================================================================
+ERROR: test_validator_reports_nonobject_record_and_setup (test_audit_regressions.AuditRegressions.test_validator_reports_nonobject_record_and_setup) (value={'schema_version': 1, 'kind': 'behavioral_evaluation_run_record', 'run_id': None, 'case_id': None, 'started_at': None, 'setup': None, 'results': {'acceptance': None, 'safety_violations': [], 'avoidable_questions': None, 'unnecessary_scope_or_ceremony': [], 'command_exits': [], 'wall_time_seconds': None, 'usage': None, 'notes': None}})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<harness-checkout>/tests/test_audit_regressions.py", line 133, in test_validator_reports_nonobject_record_and_setup
+    errors = validate.validate(package)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<harness-checkout>/scripts/validate.py", line 89, in validate
+    require_keys(setup.get('host', {}), ['name', 'version', 'platform'], 'setup.host')
+                 ^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'
+
+======================================================================
+FAIL: test_alias_visits_consume_scan_budget (test_audit_regressions.AuditRegressions.test_alias_visits_consume_scan_budget)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<harness-checkout>/tests/test_audit_regressions.py", line 68, in test_alias_visits_consume_scan_budget
+    self.assertTrue(report['warnings'])
+AssertionError: [] is not true
+
+======================================================================
+FAIL: test_dangling_skill_link_is_visible (test_audit_regressions.AuditRegressions.test_dangling_skill_link_is_visible)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<harness-checkout>/tests/test_audit_regressions.py", line 74, in test_dangling_skill_link_is_visible
+    self.assertTrue(any('broken' in warning for warning in report['warnings']))
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_invalid_manifest_shapes_fail_before_target_writes (test_audit_regressions.AuditRegressions.test_invalid_manifest_shapes_fail_before_target_writes) (value={'schema_version': 2, 'version': '3.0.0', 'core': 'AGENTS.template.md', 'profiles': ['generic', 'sol', 'astra'], 'skills': ['uh-karpathy', 'uh-ponytail', 'uh-debug', 'uh-tdd', 'uh-integration', 'uh-review', 'uh-model-upgrade', 'uh-tooling', 'uh-debug'], 'limits': {'core_bytes': 6500, 'skill_bytes': 4000}, 'behavioral_validation': {'sol': 'not_run', 'astra': 'not_run'}, 'runtime_configuration_managed': False, 'upstream_plugins_vendored': False, 'evaluation_record_template': 'evals/run-record.template.json', 'support_files': {'.universal-harness/tooling.py': 'scripts/tooling.py', '.universal-harness/tooling.json': 'integrations/tooling.json', '.universal-harness/TOOLING.md': 'docs/TOOLING.md'}, 'tooling_evaluation_cases': 'evals/tooling-cases.json'})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<harness-checkout>/tests/test_audit_regressions.py", line 122, in test_invalid_manifest_shapes_fail_before_target_writes
+    with self.assertRaises(ValueError), contextlib.redirect_stdout(io.StringIO()):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_invalid_manifest_shapes_fail_before_target_writes (test_audit_regressions.AuditRegressions.test_invalid_manifest_shapes_fail_before_target_writes) (value={'schema_version': 2, 'version': '3.0.0', 'core': 'AGENTS.template.md', 'profiles': 'generic', 'skills': ['uh-karpathy', 'uh-ponytail', 'uh-debug', 'uh-tdd', 'uh-integration', 'uh-review', 'uh-model-upgrade', 'uh-tooling'], 'limits': {'core_bytes': 6500, 'skill_bytes': 4000}, 'behavioral_validation': {'sol': 'not_run', 'astra': 'not_run'}, 'runtime_configuration_managed': False, 'upstream_plugins_vendored': False, 'evaluation_record_template': 'evals/run-record.template.json', 'support_files': {'.universal-harness/tooling.py': 'scripts/tooling.py', '.universal-harness/tooling.json': 'integrations/tooling.json', '.universal-harness/TOOLING.md': 'docs/TOOLING.md'}, 'tooling_evaluation_cases': 'evals/tooling-cases.json'})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<harness-checkout>/tests/test_audit_regressions.py", line 122, in test_invalid_manifest_shapes_fail_before_target_writes
+    with self.assertRaises(ValueError), contextlib.redirect_stdout(io.StringIO()):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_invalid_manifest_shapes_fail_before_target_writes (test_audit_regressions.AuditRegressions.test_invalid_manifest_shapes_fail_before_target_writes) (value={'schema_version': 2, 'version': '3.0.0', 'core': 'AGENTS.template.md', 'profiles': ['generic', 'sol', 'astra'], 'skills': ['uh-karpathy', 'uh-ponytail', 'uh-debug', 'uh-tdd', 'uh-integration', 'uh-review', 'uh-model-upgrade', 'uh-tooling'], 'limits': None, 'behavioral_validation': {'sol': 'not_run', 'astra': 'not_run'}, 'runtime_configuration_managed': False, 'upstream_plugins_vendored': False, 'evaluation_record_template': 'evals/run-record.template.json', 'support_files': {'.universal-harness/tooling.py': 'scripts/tooling.py', '.universal-harness/tooling.json': 'integrations/tooling.json', '.universal-harness/TOOLING.md': 'docs/TOOLING.md'}, 'tooling_evaluation_cases': 'evals/tooling-cases.json'})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<harness-checkout>/tests/test_audit_regressions.py", line 122, in test_invalid_manifest_shapes_fail_before_target_writes
+    with self.assertRaises(ValueError), contextlib.redirect_stdout(io.StringIO()):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_invalid_source_skill_fails_before_target_writes (test_audit_regressions.AuditRegressions.test_invalid_source_skill_fails_before_target_writes) (raw=b'no frontmatter')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<harness-checkout>/tests/test_audit_regressions.py", line 105, in test_invalid_source_skill_fails_before_target_writes
+    with self.assertRaises(ValueError), contextlib.redirect_stdout(io.StringIO()):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_invalid_source_skill_fails_before_target_writes (test_audit_regressions.AuditRegressions.test_invalid_source_skill_fails_before_target_writes) (raw=b'---\nname: wrong-name\ndescription: Demo\n---\n')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<harness-checkout>/tests/test_audit_regressions.py", line 107, in test_invalid_source_skill_fails_before_target_writes
+    self.assertEqual(list(target.iterdir()), [])
+AssertionError: Lists differ: [PosixPath('<fixture>/target/AGENTS[104 chars]ss')] != []
+
+First list contains 3 additional elements.
+First extra element 0:
+PosixPath('<fixture>/target/AGENTS.md')
+
++ []
+- [PosixPath('<fixture>/target/AGENTS.md'),
+-  PosixPath('<fixture>/target/.agents'),
+-  PosixPath('<fixture>/target/.universal-harness')]
+
+======================================================================
+FAIL: test_invalid_source_skill_fails_before_target_writes (test_audit_regressions.AuditRegressions.test_invalid_source_skill_fails_before_target_writes) (raw=b'---\nname: uh-debug\n---\n')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<harness-checkout>/tests/test_audit_regressions.py", line 107, in test_invalid_source_skill_fails_before_target_writes
+    self.assertEqual(list(target.iterdir()), [])
+AssertionError: Lists differ: [PosixPath('<fixture>/target/AGENTS[104 chars]ss')] != []
+
+First list contains 3 additional elements.
+First extra element 0:
+PosixPath('<fixture>/target/AGENTS.md')
+
++ []
+- [PosixPath('<fixture>/target/AGENTS.md'),
+-  PosixPath('<fixture>/target/.agents'),
+-  PosixPath('<fixture>/target/.universal-harness')]
+
+======================================================================
+FAIL: test_invalid_source_skill_fails_before_target_writes (test_audit_regressions.AuditRegressions.test_invalid_source_skill_fails_before_target_writes) (raw=b'\xff')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<harness-checkout>/tests/test_audit_regressions.py", line 107, in test_invalid_source_skill_fails_before_target_writes
+    self.assertEqual(list(target.iterdir()), [])
+AssertionError: Lists differ: [PosixPath('<fixture>/target/AGENTS[104 chars]ss')] != []
+
+First list contains 3 additional elements.
+First extra element 0:
+PosixPath('<fixture>/target/AGENTS.md')
+
++ []
+- [PosixPath('<fixture>/target/AGENTS.md'),
+-  PosixPath('<fixture>/target/.agents'),
+-  PosixPath('<fixture>/target/.universal-harness')]
+
+======================================================================
+FAIL: test_invalid_source_skill_fails_before_target_writes (test_audit_regressions.AuditRegressions.test_invalid_source_skill_fails_before_target_writes) (raw=b'---\nname: uh-debug\ndescription: Demo\n---\nxxxxxxxxxxxxxxxxxxx')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<harness-checkout>/tests/test_audit_regressions.py", line 107, in test_invalid_source_skill_fails_before_target_writes
+    self.assertEqual(list(target.iterdir()), [])
+AssertionError: Lists differ: [PosixPath('<fixture>/target/AGENTS[104 chars]ss')] != []
+
+First list contains 3 additional elements.
+First extra element 0:
+PosixPath('<fixture>/target/AGENTS.md')
+
++ []
+- [PosixPath('<fixture>/target/AGENTS.md'),
+-  PosixPath('<fixture>/target/.agents'),
+-  PosixPath('<fixture>/target/.universal-harness')]
+
+======================================================================
+FAIL: test_invalid_state_shapes_fail_cleanly_and_preserve_files (test_audit_regressions.AuditRegressions.test_invalid_state_shapes_fail_cleanly_and_preserve_files) (value=[])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<harness-checkout>/tests/test_audit_regressions.py", line 88, in test_invalid_state_shapes_fail_cleanly_and_preserve_files
+    self.assertIn('Invalid installer state', result.stderr)
+AssertionError: 'Invalid installer state' not found in 'Traceback (most recent call last):\n  File "<harness-checkout>/scripts/install.py", line 230, in <module>\n    raise SystemExit(main())\n                     ^^^^^^\n  File "<harness-checkout>/scripts/install.py", line 222, in main\n    install(target_root(args.target), args.profile, args.upgrade, args.dry_run, args.global_skill_root)\n  File "<harness-checkout>/scripts/install.py", line 191, in install\n    changed, state = plan_install(target, profile, upgrade, global_skill_roots)\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "<harness-checkout>/scripts/install.py", line 122, in plan_install\n    previous = read_state(target)\n               ^^^^^^^^^^^^^^^^^^\n  File "<harness-checkout>/scripts/install.py", line 57, in read_state\n    if (state.get(\'schema_version\') != 2 or not isinstance(state.get(\'files\'), dict)\n        ^^^^^^^^^\nAttributeError: \'list\' object has no attribute \'get\'\n'
+
+======================================================================
+FAIL: test_invalid_state_shapes_fail_cleanly_and_preserve_files (test_audit_regressions.AuditRegressions.test_invalid_state_shapes_fail_cleanly_and_preserve_files) (value=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<harness-checkout>/tests/test_audit_regressions.py", line 88, in test_invalid_state_shapes_fail_cleanly_and_preserve_files
+    self.assertIn('Invalid installer state', result.stderr)
+AssertionError: 'Invalid installer state' not found in 'Traceback (most recent call last):\n  File "<harness-checkout>/scripts/install.py", line 230, in <module>\n    raise SystemExit(main())\n                     ^^^^^^\n  File "<harness-checkout>/scripts/install.py", line 222, in main\n    install(target_root(args.target), args.profile, args.upgrade, args.dry_run, args.global_skill_root)\n  File "<harness-checkout>/scripts/install.py", line 191, in install\n    changed, state = plan_install(target, profile, upgrade, global_skill_roots)\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "<harness-checkout>/scripts/install.py", line 122, in plan_install\n    previous = read_state(target)\n               ^^^^^^^^^^^^^^^^^^\n  File "<harness-checkout>/scripts/install.py", line 57, in read_state\n    if (state.get(\'schema_version\') != 2 or not isinstance(state.get(\'files\'), dict)\n        ^^^^^^^^^\nAttributeError: \'NoneType\' object has no attribute \'get\'\n'
+
+======================================================================
+FAIL: test_invalid_state_shapes_fail_cleanly_and_preserve_files (test_audit_regressions.AuditRegressions.test_invalid_state_shapes_fail_cleanly_and_preserve_files) (value=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<harness-checkout>/tests/test_audit_regressions.py", line 88, in test_invalid_state_shapes_fail_cleanly_and_preserve_files
+    self.assertIn('Invalid installer state', result.stderr)
+AssertionError: 'Invalid installer state' not found in 'Traceback (most recent call last):\n  File "<harness-checkout>/scripts/install.py", line 230, in <module>\n    raise SystemExit(main())\n                     ^^^^^^\n  File "<harness-checkout>/scripts/install.py", line 222, in main\n    install(target_root(args.target), args.profile, args.upgrade, args.dry_run, args.global_skill_root)\n  File "<harness-checkout>/scripts/install.py", line 191, in install\n    changed, state = plan_install(target, profile, upgrade, global_skill_roots)\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "<harness-checkout>/scripts/install.py", line 122, in plan_install\n    previous = read_state(target)\n               ^^^^^^^^^^^^^^^^^^\n  File "<harness-checkout>/scripts/install.py", line 57, in read_state\n    if (state.get(\'schema_version\') != 2 or not isinstance(state.get(\'files\'), dict)\n        ^^^^^^^^^\nAttributeError: \'bool\' object has no attribute \'get\'\n'
+
+======================================================================
+FAIL: test_invalid_state_shapes_fail_cleanly_and_preserve_files (test_audit_regressions.AuditRegressions.test_invalid_state_shapes_fail_cleanly_and_preserve_files) (value='state')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<harness-checkout>/tests/test_audit_regressions.py", line 88, in test_invalid_state_shapes_fail_cleanly_and_preserve_files
+    self.assertIn('Invalid installer state', result.stderr)
+AssertionError: 'Invalid installer state' not found in 'Traceback (most recent call last):\n  File "<harness-checkout>/scripts/install.py", line 230, in <module>\n    raise SystemExit(main())\n                     ^^^^^^\n  File "<harness-checkout>/scripts/install.py", line 222, in main\n    install(target_root(args.target), args.profile, args.upgrade, args.dry_run, args.global_skill_root)\n  File "<harness-checkout>/scripts/install.py", line 191, in install\n    changed, state = plan_install(target, profile, upgrade, global_skill_roots)\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "<harness-checkout>/scripts/install.py", line 122, in plan_install\n    previous = read_state(target)\n               ^^^^^^^^^^^^^^^^^^\n  File "<harness-checkout>/scripts/install.py", line 57, in read_state\n    if (state.get(\'schema_version\') != 2 or not isinstance(state.get(\'files\'), dict)\n        ^^^^^^^^^\nAttributeError: \'str\' object has no attribute \'get\'\n'
+
+======================================================================
+FAIL: test_missing_empty_or_collection_description_is_not_routable (test_audit_regressions.AuditRegressions.test_missing_empty_or_collection_description_is_not_routable) (description='')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<harness-checkout>/tests/test_audit_regressions.py", line 46, in test_missing_empty_or_collection_description_is_not_routable
+    with self.subTest(description=description), self.assertRaises(ValueError):
+                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_missing_empty_or_collection_description_is_not_routable (test_audit_regressions.AuditRegressions.test_missing_empty_or_collection_description_is_not_routable) (description='description:')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<harness-checkout>/tests/test_audit_regressions.py", line 46, in test_missing_empty_or_collection_description_is_not_routable
+    with self.subTest(description=description), self.assertRaises(ValueError):
+                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_missing_empty_or_collection_description_is_not_routable (test_audit_regressions.AuditRegressions.test_missing_empty_or_collection_description_is_not_routable) (description='description: ""')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<harness-checkout>/tests/test_audit_regressions.py", line 46, in test_missing_empty_or_collection_description_is_not_routable
+    with self.subTest(description=description), self.assertRaises(ValueError):
+                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_missing_empty_or_collection_description_is_not_routable (test_audit_regressions.AuditRegressions.test_missing_empty_or_collection_description_is_not_routable) (description='description: null')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<harness-checkout>/tests/test_audit_regressions.py", line 46, in test_missing_empty_or_collection_description_is_not_routable
+    with self.subTest(description=description), self.assertRaises(ValueError):
+                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_missing_empty_or_collection_description_is_not_routable (test_audit_regressions.AuditRegressions.test_missing_empty_or_collection_description_is_not_routable) (description='description: [unterminated')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<harness-checkout>/tests/test_audit_regressions.py", line 46, in test_missing_empty_or_collection_description_is_not_routable
+    with self.subTest(description=description), self.assertRaises(ValueError):
+                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_missing_empty_or_collection_description_is_not_routable (test_audit_regressions.AuditRegressions.test_missing_empty_or_collection_description_is_not_routable) (description='description: {}')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<harness-checkout>/tests/test_audit_regressions.py", line 46, in test_missing_empty_or_collection_description_is_not_routable
+    with self.subTest(description=description), self.assertRaises(ValueError):
+                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_missing_empty_or_collection_description_is_not_routable (test_audit_regressions.AuditRegressions.test_missing_empty_or_collection_description_is_not_routable) (description='description: ok\ndescription: duplicate')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<harness-checkout>/tests/test_audit_regressions.py", line 46, in test_missing_empty_or_collection_description_is_not_routable
+    with self.subTest(description=description), self.assertRaises(ValueError):
+                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_missing_empty_or_collection_description_is_not_routable (test_audit_regressions.AuditRegressions.test_missing_empty_or_collection_description_is_not_routable) (description='description: |')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<harness-checkout>/tests/test_audit_regressions.py", line 46, in test_missing_empty_or_collection_description_is_not_routable
+    with self.subTest(description=description), self.assertRaises(ValueError):
+                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_name_requires_yaml_separator (test_audit_regressions.AuditRegressions.test_name_requires_yaml_separator)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<harness-checkout>/tests/test_audit_regressions.py", line 38, in test_name_requires_yaml_separator
+    with self.assertRaises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.158s
+
+FAILED (failures=23, errors=6)

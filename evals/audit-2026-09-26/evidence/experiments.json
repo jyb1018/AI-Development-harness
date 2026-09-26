@@ -1,0 +1,752 @@
+{
+  "base_revision": "218e2a40de5001fbf185c94e2c229148079ebcb9",
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.39"
+  },
+  "model_runs": 0,
+  "results": [
+    {
+      "id": "bootstrap-A-empty-generic",
+      "kind": "EXECUTED_DETERMINISTIC",
+      "status": "PASS",
+      "setup": {
+        "fixture": "A-empty",
+        "profile": "generic",
+        "global_roots": [],
+        "scope": "installation and discovery only; no app/model run"
+      },
+      "observed": {
+        "dry_run_no_writes": true,
+        "idempotent": true,
+        "original_files_preserved": true,
+        "installed_skills": 8,
+        "doctor_exit": 0,
+        "core_status": "managed",
+        "new_files": 14
+      },
+      "seconds": 0.046868
+    },
+    {
+      "id": "bootstrap-A-empty-sol",
+      "kind": "EXECUTED_DETERMINISTIC",
+      "status": "PASS",
+      "setup": {
+        "fixture": "A-empty",
+        "profile": "sol",
+        "global_roots": [],
+        "scope": "installation and discovery only; no app/model run"
+      },
+      "observed": {
+        "dry_run_no_writes": true,
+        "idempotent": true,
+        "original_files_preserved": true,
+        "installed_skills": 8,
+        "doctor_exit": 0,
+        "core_status": "managed",
+        "new_files": 14
+      },
+      "seconds": 0.042298
+    },
+    {
+      "id": "bootstrap-A-empty-astra",
+      "kind": "EXECUTED_DETERMINISTIC",
+      "status": "PASS",
+      "setup": {
+        "fixture": "A-empty",
+        "profile": "astra",
+        "global_roots": [],
+        "scope": "installation and discovery only; no app/model run"
+      },
+      "observed": {
+        "dry_run_no_writes": true,
+        "idempotent": true,
+        "original_files_preserved": true,
+        "installed_skills": 8,
+        "doctor_exit": 0,
+        "core_status": "managed",
+        "new_files": 14
+      },
+      "seconds": 0.040746
+    },
+    {
+      "id": "bootstrap-B-readme-generic",
+      "kind": "EXECUTED_DETERMINISTIC",
+      "status": "PASS",
+      "setup": {
+        "fixture": "B-readme",
+        "profile": "generic",
+        "global_roots": [],
+        "scope": "installation and discovery only; no app/model run"
+      },
+      "observed": {
+        "dry_run_no_writes": true,
+        "idempotent": true,
+        "original_files_preserved": true,
+        "installed_skills": 8,
+        "doctor_exit": 0,
+        "core_status": "managed",
+        "new_files": 14
+      },
+      "seconds": 0.044612
+    },
+    {
+      "id": "bootstrap-B-readme-sol",
+      "kind": "EXECUTED_DETERMINISTIC",
+      "status": "PASS",
+      "setup": {
+        "fixture": "B-readme",
+        "profile": "sol",
+        "global_roots": [],
+        "scope": "installation and discovery only; no app/model run"
+      },
+      "observed": {
+        "dry_run_no_writes": true,
+        "idempotent": true,
+        "original_files_preserved": true,
+        "installed_skills": 8,
+        "doctor_exit": 0,
+        "core_status": "managed",
+        "new_files": 14
+      },
+      "seconds": 0.041197
+    },
+    {
+      "id": "bootstrap-B-readme-astra",
+      "kind": "EXECUTED_DETERMINISTIC",
+      "status": "PASS",
+      "setup": {
+        "fixture": "B-readme",
+        "profile": "astra",
+        "global_roots": [],
+        "scope": "installation and discovery only; no app/model run"
+      },
+      "observed": {
+        "dry_run_no_writes": true,
+        "idempotent": true,
+        "original_files_preserved": true,
+        "installed_skills": 8,
+        "doctor_exit": 0,
+        "core_status": "managed",
+        "new_files": 14
+      },
+      "seconds": 0.045206
+    },
+    {
+      "id": "bootstrap-C-git-only-generic",
+      "kind": "EXECUTED_DETERMINISTIC",
+      "status": "PASS",
+      "setup": {
+        "fixture": "C-git-only",
+        "profile": "generic",
+        "global_roots": [],
+        "scope": "installation and discovery only; no app/model run"
+      },
+      "observed": {
+        "dry_run_no_writes": true,
+        "idempotent": true,
+        "original_files_preserved": true,
+        "installed_skills": 8,
+        "doctor_exit": 0,
+        "core_status": "managed",
+        "new_files": 14
+      },
+      "seconds": 0.044499
+    },
+    {
+      "id": "bootstrap-C-git-only-sol",
+      "kind": "EXECUTED_DETERMINISTIC",
+      "status": "PASS",
+      "setup": {
+        "fixture": "C-git-only",
+        "profile": "sol",
+        "global_roots": [],
+        "scope": "installation and discovery only; no app/model run"
+      },
+      "observed": {
+        "dry_run_no_writes": true,
+        "idempotent": true,
+        "original_files_preserved": true,
+        "installed_skills": 8,
+        "doctor_exit": 0,
+        "core_status": "managed",
+        "new_files": 14
+      },
+      "seconds": 0.043445
+    },
+    {
+      "id": "bootstrap-C-git-only-astra",
+      "kind": "EXECUTED_DETERMINISTIC",
+      "status": "PASS",
+      "setup": {
+        "fixture": "C-git-only",
+        "profile": "astra",
+        "global_roots": [],
+        "scope": "installation and discovery only; no app/model run"
+      },
+      "observed": {
+        "dry_run_no_writes": true,
+        "idempotent": true,
+        "original_files_preserved": true,
+        "installed_skills": 8,
+        "doctor_exit": 0,
+        "core_status": "managed",
+        "new_files": 14
+      },
+      "seconds": 0.04657
+    },
+    {
+      "id": "bootstrap-D-package-json-generic",
+      "kind": "EXECUTED_DETERMINISTIC",
+      "status": "PASS",
+      "setup": {
+        "fixture": "D-package-json",
+        "profile": "generic",
+        "global_roots": [],
+        "scope": "installation and discovery only; no app/model run"
+      },
+      "observed": {
+        "dry_run_no_writes": true,
+        "idempotent": true,
+        "original_files_preserved": true,
+        "installed_skills": 8,
+        "doctor_exit": 0,
+        "core_status": "managed",
+        "new_files": 14
+      },
+      "seconds": 0.041609
+    },
+    {
+      "id": "bootstrap-D-package-json-sol",
+      "kind": "EXECUTED_DETERMINISTIC",
+      "status": "PASS",
+      "setup": {
+        "fixture": "D-package-json",
+        "profile": "sol",
+        "global_roots": [],
+        "scope": "installation and discovery only; no app/model run"
+      },
+      "observed": {
+        "dry_run_no_writes": true,
+        "idempotent": true,
+        "original_files_preserved": true,
+        "installed_skills": 8,
+        "doctor_exit": 0,
+        "core_status": "managed",
+        "new_files": 14
+      },
+      "seconds": 0.039121
+    },
+    {
+      "id": "bootstrap-D-package-json-astra",
+      "kind": "EXECUTED_DETERMINISTIC",
+      "status": "PASS",
+      "setup": {
+        "fixture": "D-package-json",
+        "profile": "astra",
+        "global_roots": [],
+        "scope": "installation and discovery only; no app/model run"
+      },
+      "observed": {
+        "dry_run_no_writes": true,
+        "idempotent": true,
+        "original_files_preserved": true,
+        "installed_skills": 8,
+        "doctor_exit": 0,
+        "core_status": "managed",
+        "new_files": 14
+      },
+      "seconds": 0.039348
+    },
+    {
+      "id": "bootstrap-E-python-generic",
+      "kind": "EXECUTED_DETERMINISTIC",
+      "status": "PASS",
+      "setup": {
+        "fixture": "E-python",
+        "profile": "generic",
+        "global_roots": [],
+        "scope": "installation and discovery only; no app/model run"
+      },
+      "observed": {
+        "dry_run_no_writes": true,
+        "idempotent": true,
+        "original_files_preserved": true,
+        "installed_skills": 8,
+        "doctor_exit": 0,
+        "core_status": "managed",
+        "new_files": 14
+      },
+      "seconds": 0.044903
+    },
+    {
+      "id": "bootstrap-E-python-sol",
+      "kind": "EXECUTED_DETERMINISTIC",
+      "status": "PASS",
+      "setup": {
+        "fixture": "E-python",
+        "profile": "sol",
+        "global_roots": [],
+        "scope": "installation and discovery only; no app/model run"
+      },
+      "observed": {
+        "dry_run_no_writes": true,
+        "idempotent": true,
+        "original_files_preserved": true,
+        "installed_skills": 8,
+        "doctor_exit": 0,
+        "core_status": "managed",
+        "new_files": 14
+      },
+      "seconds": 0.040313
+    },
+    {
+      "id": "bootstrap-E-python-astra",
+      "kind": "EXECUTED_DETERMINISTIC",
+      "status": "PASS",
+      "setup": {
+        "fixture": "E-python",
+        "profile": "astra",
+        "global_roots": [],
+        "scope": "installation and discovery only; no app/model run"
+      },
+      "observed": {
+        "dry_run_no_writes": true,
+        "idempotent": true,
+        "original_files_preserved": true,
+        "installed_skills": 8,
+        "doctor_exit": 0,
+        "core_status": "managed",
+        "new_files": 14
+      },
+      "seconds": 0.040864
+    },
+    {
+      "id": "bootstrap-F-partial-conflict-generic",
+      "kind": "EXECUTED_DETERMINISTIC",
+      "status": "PASS",
+      "setup": {
+        "fixture": "F-partial-conflict",
+        "profile": "generic",
+        "global_roots": [],
+        "scope": "installation and discovery only; no app/model run"
+      },
+      "observed": {
+        "conflict_rejected": true,
+        "original_files_preserved": true,
+        "writes": 0
+      },
+      "seconds": 0.00221
+    },
+    {
+      "id": "bootstrap-F-partial-conflict-sol",
+      "kind": "EXECUTED_DETERMINISTIC",
+      "status": "PASS",
+      "setup": {
+        "fixture": "F-partial-conflict",
+        "profile": "sol",
+        "global_roots": [],
+        "scope": "installation and discovery only; no app/model run"
+      },
+      "observed": {
+        "conflict_rejected": true,
+        "original_files_preserved": true,
+        "writes": 0
+      },
+      "seconds": 0.001751
+    },
+    {
+      "id": "bootstrap-F-partial-conflict-astra",
+      "kind": "EXECUTED_DETERMINISTIC",
+      "status": "PASS",
+      "setup": {
+        "fixture": "F-partial-conflict",
+        "profile": "astra",
+        "global_roots": [],
+        "scope": "installation and discovery only; no app/model run"
+      },
+      "observed": {
+        "conflict_rejected": true,
+        "original_files_preserved": true,
+        "writes": 0
+      },
+      "seconds": 0.001744
+    },
+    {
+      "id": "bootstrap-node-backend-generic",
+      "kind": "EXECUTED_DETERMINISTIC",
+      "status": "PASS",
+      "setup": {
+        "fixture": "node-backend",
+        "profile": "generic",
+        "global_roots": [],
+        "scope": "installation and discovery only; no app/model run"
+      },
+      "observed": {
+        "dry_run_no_writes": true,
+        "idempotent": true,
+        "original_files_preserved": true,
+        "installed_skills": 8,
+        "doctor_exit": 0,
+        "core_status": "manual_merge_required",
+        "new_files": 14
+      },
+      "seconds": 0.04514
+    },
+    {
+      "id": "bootstrap-react-frontend-generic",
+      "kind": "EXECUTED_DETERMINISTIC",
+      "status": "PASS",
+      "setup": {
+        "fixture": "react-frontend",
+        "profile": "generic",
+        "global_roots": [],
+        "scope": "installation and discovery only; no app/model run"
+      },
+      "observed": {
+        "dry_run_no_writes": true,
+        "idempotent": true,
+        "original_files_preserved": true,
+        "installed_skills": 8,
+        "doctor_exit": 0,
+        "core_status": "manual_merge_required",
+        "new_files": 14
+      },
+      "seconds": 0.040945
+    },
+    {
+      "id": "bootstrap-typescript-monorepo-generic",
+      "kind": "EXECUTED_DETERMINISTIC",
+      "status": "PASS",
+      "setup": {
+        "fixture": "typescript-monorepo",
+        "profile": "generic",
+        "global_roots": [],
+        "scope": "installation and discovery only; no app/model run"
+      },
+      "observed": {
+        "dry_run_no_writes": true,
+        "idempotent": true,
+        "original_files_preserved": true,
+        "installed_skills": 8,
+        "doctor_exit": 0,
+        "core_status": "manual_merge_required",
+        "new_files": 14
+      },
+      "seconds": 0.048652
+    },
+    {
+      "id": "bootstrap-python-backend-generic",
+      "kind": "EXECUTED_DETERMINISTIC",
+      "status": "PASS",
+      "setup": {
+        "fixture": "python-backend",
+        "profile": "generic",
+        "global_roots": [],
+        "scope": "installation and discovery only; no app/model run"
+      },
+      "observed": {
+        "dry_run_no_writes": true,
+        "idempotent": true,
+        "original_files_preserved": true,
+        "installed_skills": 8,
+        "doctor_exit": 0,
+        "core_status": "manual_merge_required",
+        "new_files": 14
+      },
+      "seconds": 0.046804
+    },
+    {
+      "id": "bootstrap-python-ml-generic",
+      "kind": "EXECUTED_DETERMINISTIC",
+      "status": "PASS",
+      "setup": {
+        "fixture": "python-ml",
+        "profile": "generic",
+        "global_roots": [],
+        "scope": "installation and discovery only; no app/model run"
+      },
+      "observed": {
+        "dry_run_no_writes": true,
+        "idempotent": true,
+        "original_files_preserved": true,
+        "installed_skills": 8,
+        "doctor_exit": 0,
+        "core_status": "manual_merge_required",
+        "new_files": 14
+      },
+      "seconds": 0.04442
+    },
+    {
+      "id": "bootstrap-cv-ocr-generic",
+      "kind": "EXECUTED_DETERMINISTIC",
+      "status": "PASS",
+      "setup": {
+        "fixture": "cv-ocr",
+        "profile": "generic",
+        "global_roots": [],
+        "scope": "installation and discovery only; no app/model run"
+      },
+      "observed": {
+        "dry_run_no_writes": true,
+        "idempotent": true,
+        "original_files_preserved": true,
+        "installed_skills": 8,
+        "doctor_exit": 0,
+        "core_status": "manual_merge_required",
+        "new_files": 14
+      },
+      "seconds": 0.040885
+    },
+    {
+      "id": "bootstrap-mixed-language-generic",
+      "kind": "EXECUTED_DETERMINISTIC",
+      "status": "PASS",
+      "setup": {
+        "fixture": "mixed-language",
+        "profile": "generic",
+        "global_roots": [],
+        "scope": "installation and discovery only; no app/model run"
+      },
+      "observed": {
+        "dry_run_no_writes": true,
+        "idempotent": true,
+        "original_files_preserved": true,
+        "installed_skills": 8,
+        "doctor_exit": 0,
+        "core_status": "manual_merge_required",
+        "new_files": 14
+      },
+      "seconds": 0.040182
+    },
+    {
+      "id": "bootstrap-legacy-generic",
+      "kind": "EXECUTED_DETERMINISTIC",
+      "status": "PASS",
+      "setup": {
+        "fixture": "legacy",
+        "profile": "generic",
+        "global_roots": [],
+        "scope": "installation and discovery only; no app/model run"
+      },
+      "observed": {
+        "dry_run_no_writes": true,
+        "idempotent": true,
+        "original_files_preserved": true,
+        "installed_skills": 8,
+        "doctor_exit": 0,
+        "core_status": "manual_merge_required",
+        "new_files": 14
+      },
+      "seconds": 0.03991
+    },
+    {
+      "id": "bootstrap-large-test-suite-generic",
+      "kind": "EXECUTED_DETERMINISTIC",
+      "status": "PASS",
+      "setup": {
+        "fixture": "large-test-suite",
+        "profile": "generic",
+        "global_roots": [],
+        "scope": "installation and discovery only; no app/model run"
+      },
+      "observed": {
+        "dry_run_no_writes": true,
+        "idempotent": true,
+        "original_files_preserved": true,
+        "installed_skills": 8,
+        "doctor_exit": 0,
+        "core_status": "manual_merge_required",
+        "new_files": 14
+      },
+      "seconds": 0.106796
+    },
+    {
+      "id": "bootstrap-poor-documentation-generic",
+      "kind": "EXECUTED_DETERMINISTIC",
+      "status": "PASS",
+      "setup": {
+        "fixture": "poor-documentation",
+        "profile": "generic",
+        "global_roots": [],
+        "scope": "installation and discovery only; no app/model run"
+      },
+      "observed": {
+        "dry_run_no_writes": true,
+        "idempotent": true,
+        "original_files_preserved": true,
+        "installed_skills": 8,
+        "doctor_exit": 0,
+        "core_status": "manual_merge_required",
+        "new_files": 14
+      },
+      "seconds": 0.038557
+    },
+    {
+      "id": "scale-10",
+      "kind": "EXECUTED_DETERMINISTIC",
+      "status": "PASS",
+      "setup": {
+        "skills": 10,
+        "one_SKILL_per_directory": true
+      },
+      "observed": {
+        "definitions_found": 10,
+        "warnings": 0,
+        "scan_seconds": 0.000729,
+        "json_bytes": 2606
+      },
+      "seconds": 0.001805
+    },
+    {
+      "id": "scale-100",
+      "kind": "EXECUTED_DETERMINISTIC",
+      "status": "PASS",
+      "setup": {
+        "skills": 100,
+        "one_SKILL_per_directory": true
+      },
+      "observed": {
+        "definitions_found": 100,
+        "warnings": 0,
+        "scan_seconds": 0.005889,
+        "json_bytes": 25846
+      },
+      "seconds": 0.014946
+    },
+    {
+      "id": "scale-1000",
+      "kind": "EXECUTED_DETERMINISTIC",
+      "status": "PASS",
+      "setup": {
+        "skills": 1000,
+        "one_SKILL_per_directory": true
+      },
+      "observed": {
+        "definitions_found": 1000,
+        "warnings": 0,
+        "scan_seconds": 0.059504,
+        "json_bytes": 260046
+      },
+      "seconds": 0.136965
+    },
+    {
+      "id": "scale-2100",
+      "kind": "EXECUTED_DETERMINISTIC",
+      "status": "PASS",
+      "setup": {
+        "skills": 2100,
+        "one_SKILL_per_directory": true
+      },
+      "observed": {
+        "definitions_found": 1999,
+        "warnings": 1,
+        "scan_seconds": 0.119161,
+        "json_bytes": 519847
+      },
+      "seconds": 0.255359
+    },
+    {
+      "id": "route-absent",
+      "kind": "EXECUTED_DETERMINISTIC",
+      "status": "PASS",
+      "setup": {
+        "host_availability": "synthetic input, no provider started"
+      },
+      "observed": {
+        "discover": null,
+        "author-skill": null,
+        "library-docs": null,
+        "symbols": null,
+        "architecture": null,
+        "browser-check": null,
+        "browser-debug": null,
+        "repository": null,
+        "independent-review": null,
+        "security-review": null,
+        "production-debug": null
+      },
+      "seconds": 0.000532
+    },
+    {
+      "id": "route-observed",
+      "kind": "EXECUTED_DETERMINISTIC",
+      "status": "PASS",
+      "setup": {
+        "host_availability": "synthetic input, no provider started"
+      },
+      "observed": {
+        "discover": "find-skills",
+        "author-skill": "skill-creator",
+        "library-docs": "context7",
+        "symbols": "serena",
+        "architecture": "graphify",
+        "browser-check": "playwright",
+        "browser-debug": "chrome-devtools",
+        "repository": "github",
+        "independent-review": "coderabbit",
+        "security-review": "codex-security",
+        "production-debug": "sentry"
+      },
+      "seconds": 0.000302
+    },
+    {
+      "id": "route-offline",
+      "kind": "EXECUTED_DETERMINISTIC",
+      "status": "PASS",
+      "setup": {
+        "host_availability": "synthetic input, no provider started"
+      },
+      "observed": {
+        "discover": null,
+        "author-skill": "skill-creator",
+        "library-docs": null,
+        "symbols": "serena",
+        "architecture": "graphify",
+        "browser-check": "playwright",
+        "browser-debug": "chrome-devtools",
+        "repository": null,
+        "independent-review": null,
+        "security-review": null,
+        "production-debug": null
+      },
+      "seconds": 0.000238
+    },
+    {
+      "id": "route-unrelated-broken-skill",
+      "kind": "EXECUTED_DETERMINISTIC",
+      "status": "PASS",
+      "setup": {
+        "host_availability": "synthetic input, no provider started"
+      },
+      "observed": {
+        "discover": null,
+        "author-skill": null,
+        "library-docs": null,
+        "symbols": null,
+        "architecture": null,
+        "browser-check": null,
+        "browser-debug": null,
+        "repository": null,
+        "independent-review": null,
+        "security-review": null,
+        "production-debug": null
+      },
+      "seconds": 0.000503
+    },
+    {
+      "id": "interrupted-install",
+      "kind": "EXECUTED_DETERMINISTIC",
+      "status": "PASS",
+      "setup": {
+        "fault": "SIMULATED I/O error; real installer executed"
+      },
+      "observed": {
+        "failure_after_writes": 3,
+        "state_absent_until_retry": true,
+        "retry_completed": true
+      },
+      "seconds": 0.004518
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+test_alias_visits_consume_scan_budget (test_audit_regressions.AuditRegressions.test_alias_visits_consume_scan_budget) ... ok
+test_dangling_skill_link_is_visible (test_audit_regressions.AuditRegressions.test_dangling_skill_link_is_visible) ... ok
+test_invalid_manifest_shapes_fail_before_target_writes (test_audit_regressions.AuditRegressions.test_invalid_manifest_shapes_fail_before_target_writes) ... ok
+test_invalid_source_skill_fails_before_target_writes (test_audit_regressions.AuditRegressions.test_invalid_source_skill_fails_before_target_writes) ... ok
+test_invalid_state_shapes_fail_cleanly_and_preserve_files (test_audit_regressions.AuditRegressions.test_invalid_state_shapes_fail_cleanly_and_preserve_files) ... ok
+test_missing_empty_or_collection_description_is_not_routable (test_audit_regressions.AuditRegressions.test_missing_empty_or_collection_description_is_not_routable) ... ok
+test_name_requires_yaml_separator (test_audit_regressions.AuditRegressions.test_name_requires_yaml_separator) ... ok
+test_quoted_and_multiline_descriptions_remain_supported (test_audit_regressions.AuditRegressions.test_quoted_and_multiline_descriptions_remain_supported) ... ok
+test_summary_keeps_strict_failure_and_route_evidence (test_audit_regressions.AuditRegressions.test_summary_keeps_strict_failure_and_route_evidence) ... ok
+test_summary_output_does_not_expand_with_skill_catalog (test_audit_regressions.AuditRegressions.test_summary_output_does_not_expand_with_skill_catalog) ... ok
+test_tooling_support_cannot_be_omitted_or_corrupted (test_audit_regressions.AuditRegressions.test_tooling_support_cannot_be_omitted_or_corrupted) ... ok
+test_validator_reports_nonobject_record_and_setup (test_audit_regressions.AuditRegressions.test_validator_reports_nonobject_record_and_setup) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.383s
+
+OK

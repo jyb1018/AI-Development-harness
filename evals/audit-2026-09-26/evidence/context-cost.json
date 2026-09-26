@@ -1,0 +1,148 @@
+{
+  "measurement": "bytes and chars, token estimate is not billing",
+  "files": [
+    {
+      "path": "AGENTS.template.md",
+      "baseline_bytes": 5799,
+      "patched_bytes": 5799,
+      "baseline_chars": 5799,
+      "patched_chars": 5799,
+      "baseline_metadata_chars": 0,
+      "estimated_baseline_tokens_chars_div_4": 1450,
+      "baseline_sha256": "4b80388ca40a00bb54d2fe5513e01cf0cec0087a379a6be25d9dacbe58fc8cec",
+      "patched_sha256": "4b80388ca40a00bb54d2fe5513e01cf0cec0087a379a6be25d9dacbe58fc8cec"
+    },
+    {
+      "path": "profiles/astra.md",
+      "baseline_bytes": 791,
+      "patched_bytes": 791,
+      "baseline_chars": 791,
+      "patched_chars": 791,
+      "baseline_metadata_chars": 0,
+      "estimated_baseline_tokens_chars_div_4": 198,
+      "baseline_sha256": "1faeb82f7604b9aefcfeed4032a88923dd668451f8b3cfa374553a876c0f23c2",
+      "patched_sha256": "1faeb82f7604b9aefcfeed4032a88923dd668451f8b3cfa374553a876c0f23c2"
+    },
+    {
+      "path": "profiles/generic.md",
+      "baseline_bytes": 451,
+      "patched_bytes": 451,
+      "baseline_chars": 451,
+      "patched_chars": 451,
+      "baseline_metadata_chars": 0,
+      "estimated_baseline_tokens_chars_div_4": 113,
+      "baseline_sha256": "0f5f8549ee91e0f1614471f491097c3063b166ee5c77006ec9394e2091567600",
+      "patched_sha256": "0f5f8549ee91e0f1614471f491097c3063b166ee5c77006ec9394e2091567600"
+    },
+    {
+      "path": "profiles/sol.md",
+      "baseline_bytes": 680,
+      "patched_bytes": 680,
+      "baseline_chars": 680,
+      "patched_chars": 680,
+      "baseline_metadata_chars": 0,
+      "estimated_baseline_tokens_chars_div_4": 170,
+      "baseline_sha256": "106d9117f7dc7e880497e4b20e632d36e80d5b908c778aee77d9867fc2e78aa2",
+      "patched_sha256": "106d9117f7dc7e880497e4b20e632d36e80d5b908c778aee77d9867fc2e78aa2"
+    },
+    {
+      "path": "skills/uh-debug/SKILL.md",
+      "baseline_bytes": 1492,
+      "patched_bytes": 1492,
+      "baseline_chars": 1492,
+      "patched_chars": 1492,
+      "baseline_metadata_chars": 114,
+      "estimated_baseline_tokens_chars_div_4": 373,
+      "baseline_sha256": "54397f8ba63b2d0fa2706c9bae3475bcf2d81270bfc7560c362c1a4efc3cb5fe",
+      "patched_sha256": "54397f8ba63b2d0fa2706c9bae3475bcf2d81270bfc7560c362c1a4efc3cb5fe"
+    },
+    {
+      "path": "skills/uh-integration/SKILL.md",
+      "baseline_bytes": 1618,
+      "patched_bytes": 1618,
+      "baseline_chars": 1618,
+      "patched_chars": 1618,
+      "baseline_metadata_chars": 146,
+      "estimated_baseline_tokens_chars_div_4": 405,
+      "baseline_sha256": "a8a41545d01fd7b2e14fa52fc80ff2a15099bed34f969a3840cf060481039cae",
+      "patched_sha256": "a8a41545d01fd7b2e14fa52fc80ff2a15099bed34f969a3840cf060481039cae"
+    },
+    {
+      "path": "skills/uh-karpathy/SKILL.md",
+      "baseline_bytes": 1287,
+      "patched_bytes": 1287,
+      "baseline_chars": 1287,
+      "patched_chars": 1287,
+      "baseline_metadata_chars": 141,
+      "estimated_baseline_tokens_chars_div_4": 322,
+      "baseline_sha256": "9d274d2be49340550f90eafe17e601d9b8c85e9a16c84b820c30697998b5280c",
+      "patched_sha256": "9d274d2be49340550f90eafe17e601d9b8c85e9a16c84b820c30697998b5280c"
+    },
+    {
+      "path": "skills/uh-model-upgrade/SKILL.md",
+      "baseline_bytes": 1968,
+      "patched_bytes": 2151,
+      "baseline_chars": 1968,
+      "patched_chars": 2151,
+      "baseline_metadata_chars": 144,
+      "estimated_baseline_tokens_chars_div_4": 492,
+      "baseline_sha256": "d2f7b204fd70a3373da36205157f5990aba0d0a3f21c06354ff5500de75f9ae3",
+      "patched_sha256": "54870a5be7dea71145922a8320fb22150f1c1c1b20764178aeeb8bc38f4bbad5"
+    },
+    {
+      "path": "skills/uh-ponytail/SKILL.md",
+      "baseline_bytes": 1111,
+      "patched_bytes": 1111,
+      "baseline_chars": 1111,
+      "patched_chars": 1111,
+      "baseline_metadata_chars": 116,
+      "estimated_baseline_tokens_chars_div_4": 278,
+      "baseline_sha256": "e98365d92f5aec54c501f71a8b2d7e83865afa157fbb14c4923a85ba7acb9cbf",
+      "patched_sha256": "e98365d92f5aec54c501f71a8b2d7e83865afa157fbb14c4923a85ba7acb9cbf"
+    },
+    {
+      "path": "skills/uh-review/SKILL.md",
+      "baseline_bytes": 1442,
+      "patched_bytes": 1442,
+      "baseline_chars": 1442,
+      "patched_chars": 1442,
+      "baseline_metadata_chars": 132,
+      "estimated_baseline_tokens_chars_div_4": 361,
+      "baseline_sha256": "73ede96ee7b737d5d661c0d4890182078fed67f5117d46b18a3c4dc70add63c0",
+      "patched_sha256": "73ede96ee7b737d5d661c0d4890182078fed67f5117d46b18a3c4dc70add63c0"
+    },
+    {
+      "path": "skills/uh-tdd/SKILL.md",
+      "baseline_bytes": 1331,
+      "patched_bytes": 1331,
+      "baseline_chars": 1331,
+      "patched_chars": 1331,
+      "baseline_metadata_chars": 122,
+      "estimated_baseline_tokens_chars_div_4": 333,
+      "baseline_sha256": "7e4ab2bd2497c94e5d9df7cd30f1d14068ecb697ea6c91480c30415411c58f79",
+      "patched_sha256": "7e4ab2bd2497c94e5d9df7cd30f1d14068ecb697ea6c91480c30415411c58f79"
+    },
+    {
+      "path": "skills/uh-tooling/SKILL.md",
+      "baseline_bytes": 2846,
+      "patched_bytes": 2846,
+      "baseline_chars": 2846,
+      "patched_chars": 2846,
+      "baseline_metadata_chars": 301,
+      "estimated_baseline_tokens_chars_div_4": 712,
+      "baseline_sha256": "cf3d992ddf6178d5682479af33c935a73948a19161d86c280c63b80462d94191",
+      "patched_sha256": "cf3d992ddf6178d5682479af33c935a73948a19161d86c280c63b80462d94191"
+    },
+    {
+      "path": "docs/TOOLING.md",
+      "baseline_bytes": 9236,
+      "patched_bytes": 10174,
+      "baseline_chars": 5381,
+      "patched_chars": 5838,
+      "baseline_metadata_chars": 0,
+      "estimated_baseline_tokens_chars_div_4": 1346,
+      "baseline_sha256": "d6fb77b9a656455d0ebcaee15631e93c8d8ed416649c5837d613c281b33ffaf5",
+      "patched_sha256": "7296c643b016280b66c95cc3fc00e3ab43d33f2145fcd2f0208bf393373edb64"
+    }
+  ]
+}
