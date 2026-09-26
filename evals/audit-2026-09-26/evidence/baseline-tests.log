@@ -1,0 +1,106 @@
+test_all_profiles_from_visible_only_source_and_target_working_directory (test_distribution.DistributionTests.test_all_profiles_from_visible_only_source_and_target_working_directory) ... ok
+test_extracted_zip_installs_without_git_or_prior_harness (test_distribution.DistributionTests.test_extracted_zip_installs_without_git_or_prior_harness) ... ok
+test_missing_skill_directory_fails_before_writes (test_distribution.DistributionTests.test_missing_skill_directory_fails_before_writes) ... ok
+test_partial_source_is_preflighted (test_distribution.DistributionTests.test_partial_source_is_preflighted) ... ok
+test_script_only_explains_complete_package_requirement (test_distribution.DistributionTests.test_script_only_explains_complete_package_requirement) ... ok
+test_source_skill_parent_symlink_is_refused (test_distribution.DistributionTests.test_source_skill_parent_symlink_is_refused) ... ok
+test_cli_invalid_profile (test_install.InstallTests.test_cli_invalid_profile) ... ok
+test_cli_real_install (test_install.InstallTests.test_cli_real_install) ... ok
+test_directory_collision (test_install.InstallTests.test_directory_collision) ... SKILL SCAN INCOMPLETE: run tooling doctor --strict; unreadable/unsupported definitions were preserved.
+ok
+test_dry_run_no_effects (test_install.InstallTests.test_dry_run_no_effects) ... SKILL SCAN INCOMPLETE: run tooling doctor --strict; unreadable/unsupported definitions were preserved.
+ok
+test_fresh_install (test_install.InstallTests.test_fresh_install) ... SKILL SCAN INCOMPLETE: run tooling doctor --strict; unreadable/unsupported definitions were preserved.
+ok
+test_idempotent (test_install.InstallTests.test_idempotent) ... SKILL SCAN INCOMPLETE: run tooling doctor --strict; unreadable/unsupported definitions were preserved.
+SKILL SCAN INCOMPLETE: run tooling doctor --strict; unreadable/unsupported definitions were preserved.
+ok
+test_invalid_state (test_install.InstallTests.test_invalid_state) ... ok
+test_legacy_skill_preserved (test_install.InstallTests.test_legacy_skill_preserved) ... SKILL SCAN INCOMPLETE: run tooling doctor --strict; unreadable/unsupported definitions were preserved.
+ok
+test_managed_older_content_upgrades (test_install.InstallTests.test_managed_older_content_upgrades) ... SKILL SCAN INCOMPLETE: run tooling doctor --strict; unreadable/unsupported definitions were preserved.
+SKILL SCAN INCOMPLETE: run tooling doctor --strict; unreadable/unsupported definitions were preserved.
+ok
+test_modified_agents_blocks_upgrade (test_install.InstallTests.test_modified_agents_blocks_upgrade) ... SKILL SCAN INCOMPLETE: run tooling doctor --strict; unreadable/unsupported definitions were preserved.
+SKILL SCAN INCOMPLETE: run tooling doctor --strict; unreadable/unsupported definitions were preserved.
+ok
+test_parent_file_conflict_is_preflighted (test_install.InstallTests.test_parent_file_conflict_is_preflighted) ... SKILL SCAN INCOMPLETE: run tooling doctor --strict; unreadable/unsupported definitions were preserved.
+ok
+test_preserve_existing_agents (test_install.InstallTests.test_preserve_existing_agents) ... SKILL SCAN INCOMPLETE: run tooling doctor --strict; unreadable/unsupported definitions were preserved.
+ok
+test_profile_change_requires_upgrade (test_install.InstallTests.test_profile_change_requires_upgrade) ... SKILL SCAN INCOMPLETE: run tooling doctor --strict; unreadable/unsupported definitions were preserved.
+SKILL SCAN INCOMPLETE: run tooling doctor --strict; unreadable/unsupported definitions were preserved.
+SKILL SCAN INCOMPLETE: run tooling doctor --strict; unreadable/unsupported definitions were preserved.
+ok
+test_refuse_source_tree_and_root (test_install.InstallTests.test_refuse_source_tree_and_root) ... ok
+test_relative_traversal (test_install.InstallTests.test_relative_traversal) ... ok
+test_symlink_escape (test_install.InstallTests.test_symlink_escape) ... SKILL SCAN INCOMPLETE: run tooling doctor --strict; unreadable/unsupported definitions were preserved.
+ok
+test_temporary_file_cleaned_on_replace_failure (test_install.InstallTests.test_temporary_file_cleaned_on_replace_failure) ... ok
+test_unmanaged_collision (test_install.InstallTests.test_unmanaged_collision) ... SKILL SCAN INCOMPLETE: run tooling doctor --strict; unreadable/unsupported definitions were preserved.
+ok
+test_user_edit_blocks_all_writes (test_install.InstallTests.test_user_edit_blocks_all_writes) ... SKILL SCAN INCOMPLETE: run tooling doctor --strict; unreadable/unsupported definitions were preserved.
+SKILL SCAN INCOMPLETE: run tooling doctor --strict; unreadable/unsupported definitions were preserved.
+ok
+test_dry_run_writes_nothing (test_tooling.ToolingInstallTests.test_dry_run_writes_nothing) ... ok
+test_global_same_name_blocks_before_writes (test_tooling.ToolingInstallTests.test_global_same_name_blocks_before_writes) ... ok
+test_installed_doctor_works_without_source_tree (test_tooling.ToolingInstallTests.test_installed_doctor_works_without_source_tree) ... ok
+test_managed_v2_state_upgrades_without_schema_rewrite (test_tooling.ToolingInstallTests.test_managed_v2_state_upgrades_without_schema_rewrite) ... ok
+test_missing_support_is_preflighted (test_tooling.ToolingInstallTests.test_missing_support_is_preflighted) ... ok
+test_modified_support_blocks_all_upgrade_writes (test_tooling.ToolingInstallTests.test_modified_support_blocks_all_upgrade_writes) ... ok
+test_support_files_installed_and_hash_managed (test_tooling.ToolingInstallTests.test_support_files_installed_and_hash_managed) ... ok
+test_support_install_is_idempotent (test_tooling.ToolingInstallTests.test_support_install_is_idempotent) ... ok
+test_support_source_symlink_is_refused (test_tooling.ToolingInstallTests.test_support_source_symlink_is_refused) ... ok
+test_third_party_skills_are_not_copied_or_removed (test_tooling.ToolingInstallTests.test_third_party_skills_are_not_copied_or_removed) ... ok
+test_unsafe_support_mappings_are_rejected (test_tooling.ToolingInstallTests.test_unsafe_support_mappings_are_rejected) ... ok
+test_upper_repo_same_name_blocks_before_writes (test_tooling.ToolingInstallTests.test_upper_repo_same_name_blocks_before_writes) ... ok
+test_complete_tooling_package (test_tooling.ToolingPackageTests.test_complete_tooling_package) ... ok
+test_global_mutation_contract_cannot_be_enabled (test_tooling.ToolingPackageTests.test_global_mutation_contract_cannot_be_enabled) ... ok
+test_missing_eval_is_rejected (test_tooling.ToolingPackageTests.test_missing_eval_is_rejected) ... ok
+test_missing_route_is_rejected (test_tooling.ToolingPackageTests.test_missing_route_is_rejected) ... ok
+test_missing_support_mapping_is_rejected (test_tooling.ToolingPackageTests.test_missing_support_mapping_is_rejected) ... ok
+test_missing_support_source_is_rejected (test_tooling.ToolingPackageTests.test_missing_support_source_is_rejected) ... ok
+test_ambiguous_skill_is_not_selected_even_when_reported (test_tooling.ToolingTests.test_ambiguous_skill_is_not_selected_even_when_reported) ... ok
+test_browser_selection_does_not_mandate_two_tools (test_tooling.ToolingTests.test_browser_selection_does_not_mandate_two_tools) ... ok
+test_catalog_has_complete_routes (test_tooling.ToolingTests.test_catalog_has_complete_routes) ... ok
+test_cli_candidate_does_not_require_duplicate_skill_copy (test_tooling.ToolingTests.test_cli_candidate_does_not_require_duplicate_skill_copy) ... ok
+test_cli_invalid_provider_exits_two (test_tooling.ToolingTests.test_cli_invalid_provider_exits_two) ... ok
+test_cli_json_and_strict_exit (test_tooling.ToolingTests.test_cli_json_and_strict_exit) ... ok
+test_different_duplicate_is_reported (test_tooling.ToolingTests.test_different_duplicate_is_reported) ... ok
+test_host_report_is_not_authentication (test_tooling.ToolingTests.test_host_report_is_not_authentication) ... ok
+test_identical_duplicate_is_reported_and_untouched (test_tooling.ToolingTests.test_identical_duplicate_is_reported_and_untouched) ... ok
+test_invalid_catalogs_are_rejected (test_tooling.ToolingTests.test_invalid_catalogs_are_rejected) ... ok
+test_invalid_frontmatter_is_not_guessed (test_tooling.ToolingTests.test_invalid_frontmatter_is_not_guessed) ... ok
+test_mcp_binary_is_not_active_mcp (test_tooling.ToolingTests.test_mcp_binary_is_not_active_mcp) ... ok
+test_missing_tools_have_explicit_fallback (test_tooling.ToolingTests.test_missing_tools_have_explicit_fallback) ... ok
+test_names_come_from_frontmatter_not_folder (test_tooling.ToolingTests.test_names_come_from_frontmatter_not_folder) ... ok
+test_nested_repo_scopes_stop_at_git_worktree (test_tooling.ToolingTests.test_nested_repo_scopes_stop_at_git_worktree) ... ok
+test_no_provider_commands_or_network_are_run (test_tooling.ToolingTests.test_no_provider_commands_or_network_are_run) ... ok
+test_non_git_project_does_not_scan_home_ancestors (test_tooling.ToolingTests.test_non_git_project_does_not_scan_home_ancestors) ... ok
+test_npx_alone_does_not_establish_find_skills (test_tooling.ToolingTests.test_npx_alone_does_not_establish_find_skills) ... ok
+test_offline_excludes_network_candidate (test_tooling.ToolingTests.test_offline_excludes_network_candidate) ... ok
+test_oversized_definition_warns_and_blocks_advisory_selection (test_tooling.ToolingTests.test_oversized_definition_warns_and_blocks_advisory_selection) ... ok
+test_quoted_name_crlf_bom (test_tooling.ToolingTests.test_quoted_name_crlf_bom) ... ok
+test_same_root_argument_is_not_false_duplicate (test_tooling.ToolingTests.test_same_root_argument_is_not_false_duplicate) ... ok
+test_scan_budget_is_visible (test_tooling.ToolingTests.test_scan_budget_is_visible) ... ok
+test_skill_only_is_not_executable (test_tooling.ToolingTests.test_skill_only_is_not_executable) ... ok
+test_symlink_alias_is_reported (test_tooling.ToolingTests.test_symlink_alias_is_reported) ... ok
+test_symlink_loop_terminates (test_tooling.ToolingTests.test_symlink_loop_terminates) ... ok
+test_unknown_host_report_is_rejected (test_tooling.ToolingTests.test_unknown_host_report_is_rejected) ... ok
+test_broken_link (test_validate.ValidateTests.test_broken_link) ... ok
+test_budget_limit (test_validate.ValidateTests.test_budget_limit) ... ok
+test_duplicate_eval (test_validate.ValidateTests.test_duplicate_eval) ... ok
+test_invalid_frontmatter (test_validate.ValidateTests.test_invalid_frontmatter) ... ok
+test_missing_file (test_validate.ValidateTests.test_missing_file) ... ok
+test_missing_host_regression_case (test_validate.ValidateTests.test_missing_host_regression_case) ... ok
+test_missing_lifecycle_host_regression_case (test_validate.ValidateTests.test_missing_lifecycle_host_regression_case) ... ok
+test_missing_skill_source (test_validate.ValidateTests.test_missing_skill_source) ... ok
+test_package (test_validate.ValidateTests.test_package) ... ok
+test_run_record_requires_exact_host_metadata (test_validate.ValidateTests.test_run_record_requires_exact_host_metadata) ... ok
+test_run_record_requires_reasoning_summary_field (test_validate.ValidateTests.test_run_record_requires_reasoning_summary_field) ... ok
+test_version_mismatch (test_validate.ValidateTests.test_version_mismatch) ... ok
+
+----------------------------------------------------------------------
+Ran 82 tests in 1.031s
+
+OK

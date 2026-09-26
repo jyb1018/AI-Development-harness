@@ -33,7 +33,7 @@ v2.0.1부터는 원본을 일반 `skills/` 폴더에 포함하고 설치 전에 
 ### 설치 확인
 
 설치 후 `AGENTS.md`, `.universal-harness/profile.md`, `.universal-harness/STATE.json`,
-그리고 `.agents/skills/uh-*/SKILL.md` 일곱 개가 생성됩니다. 숨김 폴더는 파일 탐색기에서
+그리고 manifest에 등록된 `.agents/skills/uh-*/SKILL.md` 여덟 개가 생성됩니다. 숨김 폴더는 파일 탐색기에서
 보이지 않을 수 있으므로 터미널에서도 확인할 수 있습니다.
 
 ```sh

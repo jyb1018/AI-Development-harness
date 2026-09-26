@@ -26,6 +26,8 @@ def validate(root: Path) -> list[str]:
         meta = json.loads((root / 'harness.json').read_text(encoding='utf-8'))
         cases = json.loads((root / 'evals/cases.json').read_text(encoding='utf-8'))
         record = json.loads((root / 'evals/run-record.template.json').read_text(encoding='utf-8'))
+        if not all(isinstance(value, dict) for value in (meta, cases, record)):
+            raise ValueError('Manifest, cases and run record must be JSON objects')
         if meta['schema_version'] != 2 or cases['schema_version'] != 2:
             errors.append('Unsupported schema')
         if meta['version'] != (root / 'VERSION').read_text(encoding='utf-8').strip():
@@ -84,6 +86,8 @@ def validate(root: Path) -> list[str]:
 
             require_keys(record, ['run_id', 'case_id', 'started_at', 'setup', 'results'], 'root')
             setup = record.get('setup', {})
+            if not isinstance(setup, dict):
+                raise ValueError('Invalid eval run-record section: setup')
             require_keys(setup, ['model', 'model_alias_or_snapshot', 'reasoning_effort', 'host',
                                  'effective_config', 'harness', 'project', 'permissions', 'tools'], 'setup')
             require_keys(setup.get('host', {}), ['name', 'version', 'platform'], 'setup.host')

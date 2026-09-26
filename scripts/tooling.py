@@ -15,6 +15,11 @@ NAME = re.compile(r'[a-z0-9][a-z0-9-]{0,63}\Z')
 MAX_BYTES = 65536
 MAX_DIRS = 2000
 SKIP_DIRS = {'.git', '.venv', 'node_modules', '__pycache__'}
+SUPPORT_FILES = {
+    '.universal-harness/tooling.py': 'scripts/tooling.py',
+    '.universal-harness/tooling.json': 'integrations/tooling.json',
+    '.universal-harness/TOOLING.md': 'docs/TOOLING.md',
+}
 
 
 def default_catalog() -> Path:
@@ -64,11 +69,7 @@ def load_catalog(path: Path) -> dict:
 def validate_package(root: Path) -> list[str]:
     """Validate v3 distribution contracts, not provider or model behavior."""
     errors = []
-    expected = {
-        '.universal-harness/tooling.py': 'scripts/tooling.py',
-        '.universal-harness/tooling.json': 'integrations/tooling.json',
-        '.universal-harness/TOOLING.md': 'docs/TOOLING.md',
-    }
+    expected = SUPPORT_FILES
     try:
         meta = json.loads((root / 'harness.json').read_text(encoding='utf-8'))
         if meta.get('support_files') != expected:
@@ -141,6 +142,11 @@ def skill_roots(project: Path, global_roots: list[Path] | None = None) -> list[t
 
 
 def skill_name(raw: bytes) -> str:
+    """Check basic required fields, not arbitrary YAML or host activation.
+
+    Support common scalar/block descriptions without adding a YAML dependency.
+    Unsupported required-field syntax is reported as an incomplete inspection.
+    """
     lines = raw.decode('utf-8-sig').splitlines()
     if not lines or lines[0] != '---':
         raise ValueError('Missing frontmatter')
@@ -151,9 +157,39 @@ def skill_name(raw: bytes) -> str:
     names = [line for line in lines[1:end] if re.match(r'^name\s*:', line)]
     if len(names) != 1:
         raise ValueError('Expected one frontmatter name')
-    match = re.fullmatch(r'''name\s*:\s*(["']?)([a-z0-9][a-z0-9-]{0,63})\1\s*(?:#.*)?''', names[0])
+    match = re.fullmatch(r'''name[ \t]*:[ \t]+(["']?)([a-z0-9][a-z0-9-]{0,63})\1[ \t]*(?:#.*)?''', names[0])
     if not match:
         raise ValueError('Unsupported skill name syntax')
+    descriptions = [(i, line) for i, line in enumerate(lines[1:end], 1)
+                    if re.match(r'^description\s*:', line)]
+    if len(descriptions) != 1:
+        raise ValueError('Expected one frontmatter description')
+    index, line = descriptions[0]
+    description = re.fullmatch(r'description[ \t]*:[ \t]+(.+)', line)
+    if not description:
+        raise ValueError('Missing or unsupported skill description')
+    value = description[1].strip()
+    if not value:
+        raise ValueError('Empty skill description')
+    if value[0] in '|>':
+        if not re.fullmatch(r'[|>][+-]?(?:\s+#.*)?', value):
+            raise ValueError('Unsupported block description syntax')
+        block = []
+        for continuation in lines[index + 1:end]:
+            if continuation and not continuation.startswith(' '):
+                break
+            block.append(continuation.strip())
+        if not any(block):
+            raise ValueError('Empty skill description')
+    elif value[0] in "\"'":
+        # Preserve YAML single-quote escaping; double-quote content remains
+        # opaque, since validating every YAML escape is the host's job.
+        quoted = re.fullmatch(r'''(["'])(.*)\1(?:\s+#.*)?''', value)
+        if not quoted or not quoted[2].strip():
+            raise ValueError('Empty or unsupported quoted description')
+    elif (value[0] in '[{&*!@`#' or value.lower() in {'null', '~', 'true', 'false'}
+          or re.fullmatch(r'[-+]?\d+(?:\.\d+)?', value)):
+        raise ValueError('Description must be a nonempty string scalar')
     return match[2]
 
 
@@ -169,7 +205,12 @@ def scan_skills(roots: list[tuple[str, Path]]) -> dict:
         visited = set()
         def walk_error(exc):
             warnings.append(f'Skill scan failed: {exc.filename} ({type(exc).__name__})')
-        for folder, directories, files in os.walk(root, followlinks=True, onerror=walk_error):
+        for visits, (folder, directories, files) in enumerate(
+                os.walk(root, followlinks=True, onerror=walk_error), 1):
+            # Count exposed directories, including aliases to a visited target.
+            if visits > MAX_DIRS:
+                warnings.append(f'Skill scan limit reached: {root}')
+                break
             path = Path(folder)
             try:
                 real = path.resolve(strict=True)
@@ -183,9 +224,11 @@ def scan_skills(roots: list[tuple[str, Path]]) -> dict:
             else:
                 visited.add(real)
                 directories[:] = sorted(d for d in directories if d not in SKIP_DIRS)
-            if len(visited) > MAX_DIRS:
-                warnings.append(f'Skill scan limit reached: {root}')
-                break
+            # os.walk lists dangling directory symlinks as files.
+            for filename in files:
+                link = path / filename
+                if link.is_symlink() and not link.exists():
+                    warnings.append(f'Broken skill-tree link: {link}')
             if 'SKILL.md' not in files:
                 continue
             skill = path / 'SKILL.md'
@@ -253,6 +296,7 @@ def inventory(project: Path, catalog: dict, global_roots: list[Path] | None = No
             'roots': [{'scope': scope, 'path': str(path)} for scope, path in roots],
             **scan, 'providers': providers,
             'limitations': ['Filesystem presence is not host activation or authentication.',
+                           'Only basic name/description fields are checked, not full YAML or dependencies.',
                            'Plugin catalogs and disabled-skill settings are not inspected.',
                            'Same SKILL.md hash does not establish identical supporting files.',
                            'No command, network request, config edit, install or deletion was performed.']}
@@ -291,6 +335,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument('--capability', help='Required for route; see catalog capability IDs')
     parser.add_argument('--offline', action='store_true', help='Exclude network-classified route candidates')
     parser.add_argument('--strict', action='store_true', help='Exit 1 for duplicate names or incomplete scan')
+    parser.add_argument('--summary', action='store_true',
+                        help='Print counts and the requested route without the full skill inventory')
     args = parser.parse_args(argv)
     try:
         catalog = load_catalog(args.catalog)
@@ -301,8 +347,18 @@ def main(argv: list[str] | None = None) -> int:
             if not args.capability:
                 parser.error('route requires --capability')
             report['route'] = route(args.capability, catalog, report, args.offline)
+        exit_code = int(args.strict and bool(report['duplicates'] or report['warnings']))
+        if args.summary:
+            summary = {'schema_version': 1, 'kind': 'read_only_tooling_summary',
+                       'project': report['project'],
+                       'counts': {key: len(report[key]) for key in ('skills', 'duplicates', 'warnings')},
+                       'readiness': 'unverified', 'limitations': report['limitations'],
+                       'note': 'Run doctor without --summary for individual paths and diagnostics.'}
+            if 'route' in report:
+                summary['route'] = report['route']
+            report = summary
         print(json.dumps(report, indent=2, ensure_ascii=True))
-        return int(args.strict and bool(report['duplicates'] or report['warnings']))
+        return exit_code
     except (OSError, ValueError, KeyError, TypeError, RuntimeError) as exc:
         print(f'TOOLING FAILED: {exc}', file=sys.stderr)
         return 2

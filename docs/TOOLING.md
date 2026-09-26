@@ -25,7 +25,7 @@ Graphify skill 자체의 설치 범위는 사용자가 정하되 동일 이름�
 ```sh
 python3 .universal-harness/tooling.py doctor .
 python3 .universal-harness/tooling.py doctor . --strict
-python3 .universal-harness/tooling.py route . --capability library-docs
+python3 .universal-harness/tooling.py route . --capability library-docs --summary
 python3 .universal-harness/tooling.py route . --capability symbols --available serena
 python3 .universal-harness/tooling.py route . --capability architecture --offline
 ```
@@ -34,6 +34,10 @@ python3 .universal-harness/tooling.py route . --capability architecture --offlin
 사용합니다. 설치했다고 들었다는 이유로 붙이지 않습니다. 재시작/호스트 변경 후에는
 다시 확인합니다. `--offline`은 네트워크로 분류한 추천 후보를 제외할 뿐, sandbox나
 방화벽이 아닙니다. 어떤 명령도 추천된 도구를 실행하지 않습니다.
+
+`--summary`는 전체 경로·해시 목록 대신 개수와 요청한 route만 출력합니다. 스킬이 많은
+환경에서 단순 후보 조회에는 이 옵션을 사용하고, 충돌의 실제 경로를 조사할 때는 전체
+doctor 결과를 확인하십시오. 검사 범위, fallback, `--strict` 종료 코드는 동일합니다.
 
 진단은 Python 표준 라이브러리로 SKILL.md와 PATH만 확인합니다. subprocess 실행,
 MCP 기동, npm/uv 설치, 인증 파일/환경변수 비밀값 조회, 네트워크 요청, 파일 수정,
@@ -46,6 +50,12 @@ MCP 기동, npm/uv 설치, 인증 파일/환경변수 비밀값 조회, 네트�
 기본 글로벌 경로를 **대체**합니다. 격리 테스트에는 `--no-global-skills`를 사용합니다.
 플러그인 내부 스킬, 호스트의 disabled 설정, 원격 도구 상태는 파일 검사로 알 수 없습니다.
 실제 호스트 카탈로그가 최종 기준이며, 이 결과를 완전한 호스트 목록으로 취급하지 않습니다.
+
+진단은 `name`과 비어 있지 않은 `description`의 기본 형식만 검사합니다. 일반적인
+문자열과 `|`/`>` 블록 설명을 지원하며, 지원하지 않는 필수 필드 형식은 경고로 남깁니다.
+전체 YAML 유효성, supporting files와 의존성, 버전 호환성까지 검증한 결과는 아닙니다.
+끊어진 skill-tree 링크도 경고하며, 루트당 탐색 한도에는 같은 대상을 가리키는 별칭도
+포함됩니다. 이 한도는 디렉터리 방문 수이지 파일시스템 I/O나 출력 크기의 엄격한 상한은 아닙니다.
 
 ### 결과를 해석하는 방법
 

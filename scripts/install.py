@@ -54,7 +54,7 @@ def read_state(target: Path) -> dict:
     if not path.exists():
         return {'schema_version': 2, 'files': {}}
     state = json.loads(path.read_text(encoding='utf-8'))
-    if (state.get('schema_version') != 2 or not isinstance(state.get('files'), dict)
+    if (not isinstance(state, dict) or state.get('schema_version') != 2 or not isinstance(state.get('files'), dict)
             or not all(isinstance(k, str) and isinstance(v, str)
                        and re.fullmatch(r'[0-9a-f]{64}', v)
                        for k, v in state['files'].items())):
@@ -88,8 +88,17 @@ def require_source_files(relative_paths: list[str]) -> None:
 def package_files(profile: str) -> tuple[dict, dict[str, bytes]]:
     require_source_files(['harness.json'])
     meta = json.loads((ROOT / 'harness.json').read_text(encoding='utf-8'))
-    if meta.get('schema_version') != 2 or profile not in meta['profiles']:
+    if (not isinstance(meta, dict) or meta.get('schema_version') != 2
+            or not isinstance(meta.get('profiles'), list) or profile not in meta['profiles']):
         raise ValueError('Unsupported package/profile')
+    names = meta.get('skills')
+    limits = meta.get('limits')
+    if (not isinstance(names, list) or not names
+            or not all(isinstance(name, str) and re.fullmatch(r'uh-[a-z0-9-]+', name) for name in names)
+            or len(names) != len(set(names))
+            or not isinstance(limits, dict)
+            or type(limits.get('skill_bytes')) is not int or limits['skill_bytes'] <= 0):
+        raise ValueError('Invalid package skill inventory or limits')
     # Visible source payload survives copying without hidden directories.
     # The installed layout remains the host's .agents/skills convention.
     sources = {'.universal-harness/profile.md': f'profiles/{profile}.md'}
@@ -113,8 +122,22 @@ def package_files(profile: str) -> tuple[dict, dict[str, bytes]]:
             raise ValueError('Unsafe or colliding support file destination')
         seen.add(key)
         sources[destination] = source
-    require_source_files(['AGENTS.template.md', *sources.values()])
-    return meta, {rel: (ROOT / source).read_bytes() for rel, source in sources.items()}
+    require_source_files(['AGENTS.template.md', *sources.values(),
+                          *(['scripts/tooling.py'] if 'uh-tooling' in names else [])])
+    payload = {rel: (ROOT / source).read_bytes() for rel, source in sources.items()}
+    if 'uh-tooling' in names:
+        import tooling
+        if any(support.get(dest) != source for dest, source in tooling.SUPPORT_FILES.items()):
+            raise ValueError('Incomplete tooling support mapping; no files written')
+        tooling.load_catalog(ROOT / 'integrations/tooling.json')
+        for name in names:
+            raw = payload[f'.agents/skills/{name}/SKILL.md']
+            try:
+                if len(raw) > limits['skill_bytes'] or tooling.skill_name(raw) != name:
+                    raise ValueError('Name mismatch or instruction budget exceeded')
+            except (ValueError, UnicodeError) as exc:
+                raise ValueError(f'Invalid source skill: {name}; no files written. {exc}') from exc
+    return meta, payload
 
 
 def plan_install(target: Path, profile: str, upgrade: bool,

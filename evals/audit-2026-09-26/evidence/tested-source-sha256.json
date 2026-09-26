@@ -1,0 +1,14 @@
+{
+  "base_revision": "218e2a40de5001fbf185c94e2c229148079ebcb9",
+  "unit_tests_passed": 94,
+  "fixture_experiments_passed": 37,
+  "model_runs": 0,
+  "sha256": {
+    "scripts/install.py": "4cea8c5d22dd46380dd165504864c2c23d84a474322d89ca4799e96d765877b5",
+    "scripts/tooling.py": "cfcd6b0cd084a27b85ca24aa62933ab3a62366c2d281b9f9b80b5571de107bfc",
+    "scripts/validate.py": "f7ec6f6c3b8beda99cc6df58a578603a1f68d27581cb46d67e739894b072a1d1",
+    "skills/uh-model-upgrade/SKILL.md": "54870a5be7dea71145922a8320fb22150f1c1c1b20764178aeeb8bc38f4bbad5",
+    "tests/test_audit_regressions.py": "fcba0d69c77f091faf8e755e55aa1daebe7dcd612f5285f39102bbb66cc0a75e",
+    "evals/audit-2026-09-26/run_experiments.py": "183ff49788f376637d2bf63aa865d02faa579ebe9013900413df70df52b2bcb9"
+  }
+}
