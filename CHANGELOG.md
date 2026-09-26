@@ -5,8 +5,9 @@
 - Add a structured behavioral run record that separates model/effort, exact host
   patch version and platform, request-affecting effective config, harness/project
   revisions, permissions/tools, and observed results.
-- Add fixed host regression cases for reasoning-summary default changes, native
-  empty-continuation blocking, and native user verification.
+- Add fixed host regression cases for reasoning-summary defaults, native
+  empty-continuation blocking, native verification, instruction/skill lifecycle,
+  mid-flight authorization revision, and compaction/resume continuity.
 - Validate the run-record contract and required host regression case inventory in CI.
 - Clarify that host/runtime regressions must be isolated before changing the common
   core or model profiles. No Sol/Astra profile behavior change.
