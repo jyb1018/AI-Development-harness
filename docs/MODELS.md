@@ -43,6 +43,12 @@ API와 Codex UI의 설정 이름이 같다고 가정하지 않습니다.
 재현이 불가능하면 그 경계는 `unknown`으로 남깁니다. host가 native loop protection이나
 user verification을 제공할 때도 하네스가 이를 우회하거나 중복 구현하지 않습니다.
 
+일부 host 상태는 thread 시작 때 고정되지 않습니다. host/cloud skill provider·인증 범위·resource
+세대, 진행 중 authorization, compaction/resume처럼 **실행 중 바뀔 수 있는 상태**가 관련된 회귀는
+초기 설정만 기록하지 말고 관측 가능한 변경 이벤트와 적용 시점을 함께 남깁니다. 해당 capability가
+실제로 없는 환경은 `not_applicable`, 존재 여부나 적용 상태를 확인할 수 없는 계층은 `unknown`으로
+구분합니다. 이런 host lifecycle 차이를 Sol/Astra 성격 차이로 곧바로 옮기지 않습니다.
+
 ## 이전 분석의 정정
 
 연동 실패 뒤에 모델 업그레이드가 있었다는 관찰만으로 업그레이드가 원인이라고 결론 내릴 수 없습니다.
