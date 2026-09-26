@@ -18,7 +18,7 @@
       "other_request_affecting_overrides": {}
     },
     "harness": {
-      "version": "2.0.2",
+      "version": "3.0.0",
       "revision": null,
       "profile": null
     },
