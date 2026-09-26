@@ -61,7 +61,10 @@ def validate(root: Path) -> list[str]:
                 errors.append(f'Invalid eval: {case["id"]}')
         if cases['kind'] != 'behavioral_scenarios_not_execution_results':
             errors.append('Eval evidence type missing')
-        host_case_ids = {'host-reasoning-summary', 'host-empty-continuation', 'host-native-verification'}
+        host_case_ids = {
+            'host-reasoning-summary', 'host-empty-continuation', 'host-native-verification',
+            'host-instruction-lifecycle', 'host-authorization-revision', 'host-compaction-resume'
+        }
         missing_host_cases = sorted(host_case_ids - set(ids))
         if missing_host_cases:
             errors.append('Missing host regression eval IDs: ' + ', '.join(missing_host_cases))
