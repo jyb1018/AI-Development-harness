@@ -7,9 +7,14 @@ description: Assess changed model, host, tool, skill-loading, or prompting behav
 
 Run on a relevant upgrade or measured regression, not on routine product edits.
 
-Identify the actual model/effort, host version, permissions, tools, installed
-plugins/hooks, core revision, and project task. Inspect relevant instruction
-sources for duplicate or conflicting rules; report layers you cannot inspect.
+Identify the actual model/effort, exact host patch version, platform, permissions,
+tools, installed plugins/hooks, core revision, and project task. Record effective
+request-affecting host/model config such as reasoning-summary settings when applicable.
+For lifecycle-sensitive regressions, also record observable instruction/skill sources
+and material mid-run changes such as provider/auth invalidation, authorization revision,
+or compaction/resume. Inspect relevant instruction sources for duplicate or conflicting
+rules; report layers you cannot inspect. Use `not_applicable` when a required host
+capability is absent and `unknown` when its effective state cannot be observed.
 Do not assume all versions of a model alias or host behave identically.
 
 Compare the prior and candidate setup using fixed tasks, repository revisions,

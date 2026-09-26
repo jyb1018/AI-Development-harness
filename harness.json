@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "version": "2.0.1",
+  "version": "2.0.2",
   "core": "AGENTS.template.md",
   "profiles": [
     "generic",
@@ -25,5 +25,6 @@
     "astra": "not_run"
   },
   "runtime_configuration_managed": false,
-  "upstream_plugins_vendored": false
+  "upstream_plugins_vendored": false,
+  "evaluation_record_template": "evals/run-record.template.json"
 }
