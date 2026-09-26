@@ -28,6 +28,9 @@ At minimum preserve these **separate layers**:
   `model_reasoning_summary` when applicable;
 - harness version/revision/profile and project repository/revision;
 - actual permission/sandbox posture and available tools;
+- for lifecycle-sensitive cases, observable instruction/skill sources and material
+  mid-run events (for example provider/auth invalidation, authorization revision,
+  compaction/resume); mark inaccessible layers `unknown` rather than inferring them;
 - acceptance result, command exits, safety findings, avoidable questions/scope,
   wall time, and usage when the host reports it.
 
@@ -39,15 +42,31 @@ hypothesis, but they do not substitute for a runnable provider reproduction.
 
 ## Host regression cases
 
-The catalog contains three fixed host-boundary cases in addition to product
-behavior cases:
+The catalog contains fixed host-boundary cases in addition to product behavior
+cases. They cover both startup configuration and state that can change while a
+thread is running:
 
 - `host-reasoning-summary`: separate host defaults/provider capability from model
   and harness behavior;
 - `host-empty-continuation`: respect native loop protection rather than creating
   renamed retries;
 - `host-native-verification`: honor native approval/verification denial without
-  trying an alternate tool path.
+  trying an alternate tool path;
+- `host-instruction-lifecycle`: distinguish host/cloud skill refresh, invalidation,
+  provider absence, and inaccessible instruction layers from model behavior;
+- `host-authorization-revision`: honor authorization narrowed while an action is
+  in flight and do not turn policy denial into an alternate-tool or network retry;
+- `host-compaction-resume`: preserve parent acceptance, completed effects, and
+  applicable settings across compaction and process resume.
+
+A host-specific case may be `not_applicable` when the required capability (for
+example a host-supplied skill provider) is absent. Use `unknown` when the capability
+may exist but its effective state cannot be observed. Neither state is a failed
+model run by itself.
+
+For lifecycle cases, capture only the minimum event evidence needed to explain the
+boundary in the run record's existing `notes` and `other_request_affecting_overrides`
+fields. Do not add a universal tracing ceremony merely to populate telemetry.
 
 These cases are intentionally host-oriented. They should not become Sol- or
 Astra-specific rules unless measured model behavior requires that split.
