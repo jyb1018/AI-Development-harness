@@ -33,16 +33,21 @@ class HumanContextContractTests(unittest.TestCase):
 
     def test_self_contained_skill_frontmatter_and_budget(self):
         for name in NEW_SKILLS:
-            with self.subTest(skill=name):
-                path = ROOT / 'skills' / name / 'SKILL.md'
-                raw = path.read_bytes()
-                header = re.match(r'\A---\nname: ([a-z0-9-]+)\ndescription: ([^\n]+)\n---\n', raw.decode('utf-8'))
-                self.assertIsNotNone(header)
-                self.assertEqual(header[1], name)
-                self.assertLessEqual(len(header[2]), 1024)
-                self.assertLessEqual(len(raw), self.meta['limits']['skill_bytes'])
-                # Installed SKILL.md must not depend on source-only relative files.
-                self.assertEqual(re.findall(r'\]\((?![a-z]+:|#)([^)\s]+)\)', raw.decode('utf-8')), [])
+            raw = (ROOT / 'skills' / name / 'SKILL.md').read_bytes()
+            # Git may check out CRLF on Windows. Match the validator's universal
+            # newline text semantics, but check the actual byte budget for both.
+            canonical = raw.replace(b'\r\n', b'\n')
+            for newline in (b'\n', b'\r\n'):
+                with self.subTest(skill=name, newline=newline):
+                    variant = canonical.replace(b'\n', newline)
+                    text = variant.decode('utf-8').replace('\r\n', '\n')
+                    header = re.match(r'\A---\nname: ([a-z0-9-]+)\ndescription: ([^\n]+)\n---\n', text)
+                    self.assertIsNotNone(header)
+                    self.assertEqual(header[1], name)
+                    self.assertLessEqual(len(header[2]), 1024)
+                    self.assertLessEqual(len(variant), self.meta['limits']['skill_bytes'])
+                    # Installed SKILL.md must not depend on source-only files.
+                    self.assertEqual(re.findall(r'\]\((?![a-z]+:|#)([^)\s]+)\)', text), [])
 
     def test_opt_in_core_triggers_fit_existing_budget(self):
         core = (ROOT / self.meta['core']).read_bytes()
