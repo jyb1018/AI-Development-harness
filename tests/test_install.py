@@ -27,7 +27,9 @@ class InstallTests(unittest.TestCase):
     def test_fresh_install(self):
         state = self.run_install(profile='astra')
         self.assertEqual(state['core_status'], 'managed')
-        self.assertEqual(len(list((self.target / '.agents/skills').glob('*/SKILL.md'))), 7)
+        expected = json.loads((installer.ROOT / 'harness.json').read_text(encoding='utf-8'))['skills']
+        actual = {p.parent.name for p in (self.target / '.agents/skills').glob('*/SKILL.md')}
+        self.assertEqual(actual, set(expected))
         self.assertEqual((self.target / 'AGENTS.md').read_bytes(),
                          (installer.ROOT / 'AGENTS.template.md').read_bytes())
         self.assertFalse((self.target / '.github').exists())

@@ -1,5 +1,21 @@
 # Changelog
 
+## 3.0.0 — 2026-09-26
+
+- Add one optional `uh-tooling` skill, a capability catalog and a read-only doctor/router;
+  keep the seven existing skills, model profiles, and v2 host evaluation cases intact.
+- Distinguish global skill definitions, CLI presence, host-reported MCP/plugins,
+  authentication and actual execution evidence. No automatic upstream installation.
+- Detect same-name skills by frontmatter across project/global roots, including
+  identical definitions, variants and symlink aliases. Never delete user skills.
+- Preflight collisions with packaged uh-* skills and install portable tooling support
+  files using the existing ownership-hash/atomic-write mechanism. Keep schema 2
+  for installer-state compatibility and preserve user edits.
+- Add explicit task-specific fallbacks, graph freshness/egress/browser/review boundaries,
+  migration guidance, twelve unevaluated behavior scenarios and deterministic tests.
+- No merge/release/deploy, global config mutation, paid scan or Sol/Astra behavior
+  certification is implied by this release of instructions.
+
 ## 2.0.2 — 2026-09-20
 
 - Add a structured behavioral run record that separates model/effort, exact host

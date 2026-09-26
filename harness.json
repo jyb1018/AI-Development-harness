@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "version": "2.0.2",
+  "version": "3.0.0",
   "core": "AGENTS.template.md",
   "profiles": [
     "generic",
@@ -14,7 +14,8 @@
     "uh-tdd",
     "uh-integration",
     "uh-review",
-    "uh-model-upgrade"
+    "uh-model-upgrade",
+    "uh-tooling"
   ],
   "limits": {
     "core_bytes": 6500,
@@ -26,5 +27,11 @@
   },
   "runtime_configuration_managed": false,
   "upstream_plugins_vendored": false,
-  "evaluation_record_template": "evals/run-record.template.json"
+  "evaluation_record_template": "evals/run-record.template.json",
+  "support_files": {
+    ".universal-harness/tooling.py": "scripts/tooling.py",
+    ".universal-harness/tooling.json": "integrations/tooling.json",
+    ".universal-harness/TOOLING.md": "docs/TOOLING.md"
+  },
+  "tooling_evaluation_cases": "evals/tooling-cases.json"
 }

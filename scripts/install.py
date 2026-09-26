@@ -97,13 +97,45 @@ def package_files(profile: str) -> tuple[dict, dict[str, bytes]]:
         if not re.fullmatch(r'uh-[a-z0-9-]+', name):
             raise ValueError('Invalid skill name')
         sources[f'.agents/skills/{name}/SKILL.md'] = f'skills/{name}/SKILL.md'
+    support = meta.get('support_files', {})
+    if not isinstance(support, dict):
+        raise ValueError('Invalid support file mapping')
+    reserved = {STATE.casefold(), PROPOSAL.casefold(), '.universal-harness/profile.md'}
+    seen = set()
+    for destination, source in support.items():
+        for value in (destination, source):
+            if (not isinstance(value, str) or not value or '\\' in value
+                    or Path(value).is_absolute() or any(p in ('', '.', '..') for p in value.split('/'))):
+                raise ValueError('Unsafe support file path')
+        key = destination.casefold()
+        if (not destination.startswith('.universal-harness/') or key in reserved
+                or key in seen or source.split('/')[0] not in ('scripts', 'docs', 'integrations')):
+            raise ValueError('Unsafe or colliding support file destination')
+        seen.add(key)
+        sources[destination] = source
     require_source_files(['AGENTS.template.md', *sources.values()])
     return meta, {rel: (ROOT / source).read_bytes() for rel, source in sources.items()}
 
 
-def plan_install(target: Path, profile: str, upgrade: bool) -> tuple[dict[str, bytes], dict]:
+def plan_install(target: Path, profile: str, upgrade: bool,
+                 global_skill_roots: list[Path] | None = None) -> tuple[dict[str, bytes], dict]:
     previous = read_state(target)
     meta, wanted = package_files(profile)
+    if 'uh-tooling' in meta['skills']:
+        # Import after package preflight so install.py alone still gets a useful error.
+        import tooling
+        scan = tooling.scan_skills(tooling.skill_roots(target, global_skill_roots))
+        collisions = [item for item in scan['skills'] if item['name'] in meta['skills']
+                      and Path(item['path']).absolute() !=
+                      (target / '.agents/skills' / item['name'] / 'SKILL.md').absolute()]
+        if collisions:
+            raise ValueError('No files written: same-name skills outside the managed destination. '
+                             'Choose an active scope after reviewing the host configuration; '
+                             'the installer will not remove user files.\n' +
+                             '\n'.join(item['name'] + ': ' + item['path'] for item in collisions))
+        if scan['warnings']:
+            print('SKILL SCAN INCOMPLETE: run tooling doctor --strict; '
+                  'unreadable/unsupported definitions were preserved.', file=sys.stderr)
     core = (ROOT / 'AGENTS.template.md').read_bytes()
     agents = checked_path(target, 'AGENTS.md')
     core_managed = not agents.exists() or 'AGENTS.md' in previous['files']
@@ -153,15 +185,16 @@ def atomic_write(path: Path, data: bytes) -> None:
             os.unlink(temporary)
 
 
-def install(target: Path, profile: str, upgrade: bool = False, dry_run: bool = False) -> dict:
+def install(target: Path, profile: str, upgrade: bool = False, dry_run: bool = False,
+            global_skill_roots: list[Path] | None = None) -> dict:
     # Plan all conflicts before creating files. State is written last, per-file atomic.
-    changed, state = plan_install(target, profile, upgrade)
+    changed, state = plan_install(target, profile, upgrade, global_skill_roots)
     for rel in changed:
         print(('WOULD WRITE ' if dry_run else 'WRITE ') + rel)
     if not dry_run:
         for rel, data in changed.items():
             atomic_write(checked_path(target, rel), data)
-    print(f"{'DRY RUN' if dry_run else 'FILES INSTALLED'} {state['version']} profile={profile}")
+    print(f"{'DRY RUN' if dry_run else 'FILES INSTALLED'} {state['version']} profile={state['profile']}")
     if state['core_status'] == 'manual_merge_required':
         print(f'ACTIVATION PENDING: merge {PROPOSAL} into existing AGENTS.md; it is not auto-loaded.')
     else:
@@ -170,6 +203,9 @@ def install(target: Path, profile: str, upgrade: bool = False, dry_run: bool = F
                  'risk-review', 'external-effects', 'model-drift-audit')
     if any((target / '.agents/skills' / name).exists() for name in old_names):
         print('LEGACY SKILLS PRESENT: preserved; review duplicate activation before use.')
+    if 'uh-tooling' in json.loads((ROOT / 'harness.json').read_text(encoding='utf-8'))['skills']:
+        print('TOOLING: run python3 .universal-harness/tooling.py doctor . from the target. '
+              'No global tool was installed or authenticated.')
     return state
 
 
@@ -179,9 +215,11 @@ def main() -> int:
     parser.add_argument('--profile', choices=('generic', 'sol', 'astra'), default='generic')
     parser.add_argument('--dry-run', action='store_true')
     parser.add_argument('--upgrade', action='store_true')
+    parser.add_argument('--global-skill-root', action='append', type=Path,
+                        help='Override global roots for collision preflight; repeat as needed')
     args = parser.parse_args()
     try:
-        install(target_root(args.target), args.profile, args.upgrade, args.dry_run)
+        install(target_root(args.target), args.profile, args.upgrade, args.dry_run, args.global_skill_root)
         return 0
     except (OSError, ValueError, KeyError, TypeError) as exc:
         print(f'INSTALL FAILED: {exc}', file=sys.stderr)

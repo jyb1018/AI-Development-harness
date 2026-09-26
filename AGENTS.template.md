@@ -1,4 +1,4 @@
-# Universal Harness 2.0
+# Universal Harness 3.0
 
 ## Outcome and authority
 - Deliver the requested outcome, not a larger platform or a ceremony. Preserve project invariants.
@@ -25,6 +25,12 @@
 - Use disposable test data and least privilege. Confirm actual target/environment before shared, destructive, paid, secret, or production actions. Development is not automatically safe.
 - Report what was changed, checks actually executed, and remaining limits. Distinguish source-ready, locally verified, environment-verified, and released. Stop when the requested completion condition is met.
 
+## Capability-aware tools
+- Use the smallest sufficient available tool, not every installed tool. Global skills/CLIs/MCP/plugins are optional capabilities; local instructions define project constraints, not host precedence.
+- On a capability gap, tool failure, or skill collision, load `uh-tooling`. Distinguish installed, host-visible, authenticated, and verified; never infer one from another.
+- Do not copy global skills into this project, assume same-name override, or silently delete duplicates. Resolve the exact skill path before use. Recheck tools, target and authorization after a host/context change.
+- Graphs and cached docs are navigation hints until checked against current source/version. Missing tools require an honest fallback or blocked acceptance, not fabricated evidence or automatic installation.
+
 ## Load only relevant additions
 Read `.universal-harness/profile.md` if installed; it is a small model compatibility note, not a second policy.
 Read existing project-specific architecture/invariant docs only as needed. Do not invent required setup documents.
@@ -35,5 +41,6 @@ Optional skills live in `.agents/skills/`; read a SKILL.md only when its trigger
 - `uh-tdd`: deterministic logic or a reproducible regression; actual red/green/refactor.
 - `uh-integration`: multi-component boundary; a repeatable vertical acceptance path.
 - `uh-review`: a requested review or material risk; evidence-based findings.
+- `uh-tooling`: capability selection, missing runtime, global/local collision, or external-tool evidence.
 - `uh-model-upgrade`: changed model/host/instruction behavior; controlled comparison.
 These names are local adaptations, not installed upstream plugins. Do not load the whole catalog at startup.
