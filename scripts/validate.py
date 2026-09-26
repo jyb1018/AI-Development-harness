@@ -14,7 +14,9 @@ def validate(root: Path) -> list[str]:
     required = ['README.md', 'LICENSE', 'VERSION', 'AGENTS.md', 'AGENTS.template.md',
                 'harness.json', 'docs/SOURCES.md', 'docs/ADOPTION.md', 'docs/MIGRATION.md',
                 'docs/MODELS.md', 'docs/MODEL-UPGRADES.md', 'evals/README.md', 'evals/cases.json',
-                'evals/run-record.template.json', 'scripts/install.py', 'scripts/validate.py', '.github/workflows/validate.yml']
+                'evals/run-record.template.json', 'scripts/install.py', 'scripts/validate.py', '.github/workflows/validate.yml',
+                'scripts/tooling.py', 'integrations/tooling.json', 'docs/TOOLING.md',
+                'docs/MIGRATION-3.md', 'evals/tooling-cases.json']
     for rel in required:
         if not (root / rel).is_file():
             errors.append(f'Missing: {rel}')
@@ -96,6 +98,8 @@ def validate(root: Path) -> list[str]:
                           'usage', 'notes'], 'results')
     except (OSError, ValueError, KeyError, TypeError) as exc:
         errors.append(f'Metadata error: {exc}')
+    from tooling import validate_package as validate_tooling_package
+    errors.extend(validate_tooling_package(root))
     # Check committed Markdown relative file links, not external availability/anchors.
     for path in root.rglob('*.md'):
         if '.git' in path.parts:

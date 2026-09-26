@@ -1,10 +1,36 @@
-# Universal Harness 2.0
+# Universal Harness 3.0
 
 **GPT-5.6 Sol과 GPT-6 Astra에서 같은 핵심 규칙을 사용하는, 얇은 개발 지침 + 선택형 스킬 패키지입니다.**
 모델의 일을 대신 조직하는 운영체제가 아니라, 목표·권한·검증의 경계를 잡습니다.
 웹/서버/CLI/모바일/데이터·ML 프로젝트에 적용할 수 있지만, 각 프로젝트의 런타임·도메인 규칙은 보존해야 합니다.
 
-## 2.0의 판단
+## 3.0: 글로벌 도구와 로컬 하네스를 연결합니다
+
+기존 2.x core·7개 스킬·모델 프로필을 유지하면서 **`uh-tooling` 하나**를 추가합니다.
+범용 스킬은 글로벌에 두고, 프로젝트에는 필요한 도구를 선택하는 규칙과 읽기 전용
+점검기를 설치합니다. 전역 설정, 제3자 스킬, MCP/plugin, 인증은 자동으로 변경하지 않습니다.
+
+```text
+Global skills / CLI / host MCP / plugins
+                 ↓ 현재 호스트에서 노출·권한·대상 확인
+uh-tooling → 필요한 capability만 선택 → 실제 실행 증거
+                 └ 부재/실패 → 명시적 native fallback
+```
+
+Context7, Serena, Graphify, Playwright, DevTools, GitHub, CodeRabbit, Codex Security,
+Sentry 등을 작업별로 연결하되 **전부 설치하거나 매번 실행할 의무는 없습니다.**
+설치 상태와 사용 가능/인증/검증 완료를 구분하며, 동일 `name`의 글로벌·로컬 스킬은
+본문이 같아도 중복으로 진단합니다. 자동 삭제나 로컬 override를 가정하지 않습니다.
+
+```sh
+# 대상 프로젝트에 3.0을 설치/업그레이드한 뒤
+python3 .universal-harness/tooling.py doctor . --strict
+python3 .universal-harness/tooling.py route . --capability library-docs
+```
+
+[도구 선택·상태·fallback 계약](docs/TOOLING.md) · [2.x → 3.0 업그레이드](docs/MIGRATION-3.md)
+
+## 유지하는 2.0의 설계
 
 `Karpathy + Ponytail + Superpowers 전체`를 동시에 상시 주입하지 않습니다.
 Karpathy식 가정 확인·작은 변경·결과 검증을 핵심에 통합하고, Ponytail의 최소주의는
@@ -35,7 +61,7 @@ python3 "$HOME/AI-Development-harness/scripts/install.py" "$HOME/my-new-project"
 
 Git이 없어도 전체 ZIP을 풀고 위 명령의 원본 경로만 바꾸면 됩니다.
 실행 위치는 어디든 가능하며, 대상은 이미 존재하는 빈 폴더여도 됩니다.
-원본에는 `skills/`, `profiles/`, `harness.json`, `AGENTS.template.md`, `scripts/`가 함께 있어야 합니다.
+원본에는 `skills/`, `profiles/`, `harness.json`, `AGENTS.template.md`, `scripts/`, `integrations/`, `docs/`가 함께 있어야 합니다.
 
 ```text
 하네스 원본                         설치 후 대상 프로젝트
@@ -43,6 +69,9 @@ skills/uh-*/SKILL.md       ─────→  .agents/skills/uh-*/SKILL.md
 AGENTS.template.md        ─────→  AGENTS.md
 profiles/astra.md         ─────→  .universal-harness/profile.md
                                  .universal-harness/STATE.json
+scripts/tooling.py        ─────→  .universal-harness/tooling.py
+integrations/tooling.json ─────→  .universal-harness/tooling.json
+docs/TOOLING.md           ─────→  .universal-harness/TOOLING.md
 ```
 
 원본 스킬은 **숨김 폴더가 아닌 `skills/`**에 있습니다. 대상의 `.agents/`는 설치기가 만듭니다.
@@ -75,6 +104,7 @@ python3 "$HOME/AI-Development-harness/scripts/install.py" /path/to/project --pro
 | `uh-tdd` | 결정적 로직, 재현 가능한 버그, 안정된 계약 |
 | `uh-integration` | API·DB·배포 이미지·다중 서비스 실제 연결 |
 | `uh-review` | 명시적 리뷰 요청 또는 큰 보안·데이터 위험 |
+| `uh-tooling` | 도구 선택, 실행기 부재, 글로벌/로컬 중복, 도구 증거 확인 |
 | `uh-model-upgrade` | 모델/호스트/스킬 변경 영향 평가 |
 
 스킬 호출 표기는 호스트에 따라 다릅니다. 이름을 지정하거나 해당 SKILL.md를 읽도록 요청하면 됩니다.
@@ -98,6 +128,7 @@ python3 -m unittest discover -s tests -v
 CI는 구조·링크·설치기 회귀만 검사합니다. 모델을 호출하거나 유료 사용량을 발생시키지 않습니다.
 [행동 평가](evals/README.md)는 별도입니다. 고정 사례에 대한 실제 실행 기록 없이
 “Sol/Astra 검증 완료” 또는 속도·품질 개선 수치를 만들지 않습니다.
+3.0은 [도구 관련 행동 시나리오 12개](evals/tooling-cases.json)를 추가하며, 기존 host 회귀 사례를 유지합니다.
 
 ## 모델 업데이트 알림
 
