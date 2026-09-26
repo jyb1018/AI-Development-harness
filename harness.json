@@ -15,7 +15,9 @@
     "uh-integration",
     "uh-review",
     "uh-model-upgrade",
-    "uh-tooling"
+    "uh-tooling",
+    "uh-developer-context-sync",
+    "uh-human-diagramming"
   ],
   "limits": {
     "core_bytes": 6500,
@@ -33,5 +35,6 @@
     ".universal-harness/tooling.json": "integrations/tooling.json",
     ".universal-harness/TOOLING.md": "docs/TOOLING.md"
   },
-  "tooling_evaluation_cases": "evals/tooling-cases.json"
+  "tooling_evaluation_cases": "evals/tooling-cases.json",
+  "human_context_evaluation_cases": "evals/human-context-cases.json"
 }
