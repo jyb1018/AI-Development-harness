@@ -49,7 +49,11 @@ class ToolingTests(unittest.TestCase):
             return tooling.inventory(self.project, self.catalog, [self.global_root], available)
 
     def test_catalog_has_complete_routes(self):
-        self.assertEqual(len(self.catalog['capabilities']), 11)
+        self.assertEqual(set(self.catalog['capabilities']), {
+            'discover', 'author-skill', 'library-docs', 'symbols', 'architecture',
+            'browser-check', 'browser-debug', 'repository', 'independent-review',
+            'security-review', 'production-debug', 'human-diagrams',
+        })
         for spec in self.catalog['capabilities'].values():
             self.assertTrue(spec['fallback'])
             self.assertTrue(spec['checks'])

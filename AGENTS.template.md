@@ -43,4 +43,6 @@ Optional skills live in `.agents/skills/`; read a SKILL.md only when its trigger
 - `uh-review`: a requested review or material risk; evidence-based findings.
 - `uh-tooling`: capability selection, missing runtime, global/local collision, or external-tool evidence.
 - `uh-model-upgrade`: changed model/host/instruction behavior; controlled comparison.
+- `uh-developer-context-sync`: human onboarding, catch-up from a known revision, or a focused explanation.
+- `uh-human-diagramming`: source-grounded visual explanations of boundaries, flows, state, changes or failures.
 These names are local adaptations, not installed upstream plugins. Do not load the whole catalog at startup.

@@ -1,5 +1,17 @@
 # Changelog
 
+## Unreleased
+
+- 개발자의 ONBOARD/CATCH-UP/DEEP-DIVE를 돕는 `uh-developer-context-sync`와
+  독립적인 `uh-human-diagramming`을 선택형 스킬로 추가합니다.
+- 다이어그램의 노드/화살표 근거, 전후 비교, 실패 지도, 읽는 법과 텍스트 대안을
+  명시합니다. 설명 생성과 사용자 확인 기준점은 분리하며 상태 저장은 선택 사항입니다.
+- 기존 라우터에 `human-diagrams`와 로컬 Mermaid CLI 후보를 추가합니다.
+  자동 설치·브라우저 다운로드·외부 업로드 없이 부재/실패와 렌더링 증거를 구분합니다.
+- 사용 가이드, 미실행 행동 시나리오 19개, 패키지/라우팅 회귀 테스트를 추가합니다.
+  기존 설치기·모델 프로필·버전·지원 파일 매핑과 전역 설정은 변경하지 않습니다.
+- 새 런타임, 정식 아키텍처 모델, 제3자 스킬 번들, 실제 모델/렌더러 인증은 포함하지 않습니다.
+
 ## 3.0.0 — 2026-09-26
 
 - Add one optional `uh-tooling` skill, a capability catalog and a read-only doctor/router;

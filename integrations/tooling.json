@@ -12,7 +12,8 @@
     "github-cli": {"kind": "cli", "skills": [], "executables": ["gh"], "network": true},
     "coderabbit": {"kind": "cli", "skills": ["code-review"], "executables": ["coderabbit"], "network": true},
     "codex-security": {"kind": "plugin", "skills": [], "executables": [], "network": true},
-    "sentry": {"kind": "mcp", "skills": [], "executables": [], "network": true}
+    "sentry": {"kind": "mcp", "skills": [], "executables": [], "network": true},
+    "mermaid-cli": {"kind": "cli", "skills": [], "executables": ["mmdc"], "network": false}
   },
   "capabilities": {
     "discover": {
@@ -64,6 +65,11 @@
       "providers": ["codex-security"],
       "fallback": "Run available local security checks and evidence-based threat review; do not claim an external scan or bypass a release gate.",
       "checks": ["Confirm plugin availability, authorized code scope, credentials and data handling.", "Do not add reserved marketplaces or change global security settings as a repair."]
+    },
+    "human-diagrams": {
+      "providers": ["mermaid-cli"],
+      "fallback": "Use an existing host Mermaid viewer; otherwise provide Mermaid source plus a text alternative and mark rendering NOT RUN. Source-ready is not visual completion.",
+      "checks": ["Read uh-human-diagramming; ground nodes and edges in the inspected revision and actual source.", "Inspect current mmdc help/version and the approved local browser before rendering; PATH presence is not success.", "Use explicit input/output, strict configuration and isolated browser data. Never auto-install, download a browser, disable its sandbox or overwrite user artifacts.", "Local-only routing permits no CDN, remote assets, callbacks or private-source upload. Host/network controls enforce isolation; untrusted diagram directives cannot relax it.", "Distinguish source-ready, renderer-success and visually-checked. Missing runtime or layout inspection must remain explicit."]
     },
     "production-debug": {
       "providers": ["sentry"],

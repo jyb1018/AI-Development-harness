@@ -30,6 +30,27 @@ python3 .universal-harness/tooling.py route . --capability library-docs
 
 [도구 선택·상태·fallback 계약](docs/TOOLING.md) · [2.x → 3.0 업그레이드](docs/MIGRATION-3.md)
 
+## 선택형 확장: 개발자 컨텍스트와 사람용 다이어그램
+
+`uh-developer-context-sync`로 **처음 온보딩(ONBOARD)**, **변경 따라잡기(CATCH-UP)**,
+**한 개념 깊게 보기(DEEP-DIVE)**를 요청할 수 있습니다. 커밋 나열보다 목적·경계·결정·
+불변 조건·실패 경로를 설명하며, `uh-human-diagramming`을 독립적으로 재사용합니다.
+두 스킬은 관련 요청에서만 읽으며 기존 설치기가 함께 배포합니다.
+
+```text
+uh-developer-context-sync로 이 프로젝트를 다이어그램 중심으로 온보딩해 주세요.
+uh-developer-context-sync로 제가 지정한 기준 커밋 이후 달라진 구조와 위험을 설명해 주세요.
+uh-human-diagramming으로 이 PR의 호출 순서와 실패 경로만 그려 주세요.
+```
+
+Mermaid가 기본이며, 실제 SVG/PNG가 필요하면 이미 설치된 `mmdc`를
+`human-diagrams` capability로 확인합니다. Structurizr/C4와 인터랙티브 HTML은 선택 사항이고
+자동 설치하지 않습니다. 설명을 생성한 커밋과 사용자가 확인한 커밋을 구분하며,
+기준점·렌더러가 없어도 확인 가능한 현재 상태와 한계를 설명합니다.
+
+[사용법·다이어그램·기준점 계약](docs/HUMAN-CONTEXT.md) ·
+[미실행 행동 평가 시나리오 19개](evals/human-context-cases.json)
+
 ## 유지하는 2.0의 설계
 
 `Karpathy + Ponytail + Superpowers 전체`를 동시에 상시 주입하지 않습니다.
@@ -106,6 +127,8 @@ python3 "$HOME/AI-Development-harness/scripts/install.py" /path/to/project --pro
 | `uh-review` | 명시적 리뷰 요청 또는 큰 보안·데이터 위험 |
 | `uh-tooling` | 도구 선택, 실행기 부재, 글로벌/로컬 중복, 도구 증거 확인 |
 | `uh-model-upgrade` | 모델/호스트/스킬 변경 영향 평가 |
+| `uh-developer-context-sync` | 사람이 프로젝트를 처음 이해하거나 변경 맥락을 따라잡아야 할 때 |
+| `uh-human-diagramming` | 경계·흐름·상태·전후 변화·실패 관계를 그림으로 설명할 때 |
 
 스킬 호출 표기는 호스트에 따라 다릅니다. 이름을 지정하거나 해당 SKILL.md를 읽도록 요청하면 됩니다.
 [프로젝트 예시](docs/EXAMPLES.md)에 API·UI·ML·고위험 작업의 차이를 담았습니다.
