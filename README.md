@@ -67,12 +67,49 @@ Karpathy식 가정 확인·작은 변경·결과 검증을 핵심에 통합하�
 ## 선택형 프로젝트 모듈 — wrapper로 업데이트합니다
 
 Git 프로젝트에는 원본을 `.universal-harness/module` submodule로 붙일 수 있습니다.
-최초 1회 module의 lifecycle install을 실행하면 프로젝트 내부 wrapper가 생성됩니다.
-이후 별도 clone 경로나 전역 PATH 설정 없이 다음처럼 사용합니다.
+**새 Git 프로젝트에서는 이 방식을 권장합니다.** 최초 1회만 module의 lifecycle 진입점을 실행해
+프로젝트 내부 wrapper를 만들고, 이후에는 별도 clone 경로나 전역 PATH 설정 없이 wrapper만 사용합니다.
+
+### 최초 적용
+
+소비자 프로젝트의 **Git 루트**에서 실행하십시오.
+
+```sh
+git submodule add \
+  https://github.com/jyb1018/AI-Development-harness.git \
+  .universal-harness/module
+
+# 적용 전에 실제 변경 계획을 먼저 확인합니다.
+python3 .universal-harness/module/scripts/harness.py --project . install \
+  --profile astra --channel edge --dry-run
+
+# 최초 1회 실제 적용합니다.
+python3 .universal-harness/module/scripts/harness.py --project . install \
+  --profile astra --channel edge
+
+# 이후부터는 이 wrapper를 사용합니다.
+./.universal-harness/harness status
+```
+
+위 예시는 `main`을 따라가는 **edge 채널**입니다. Sol은 `--profile sol`,
+모델 중립 환경은 `--profile generic`을 사용합니다. `--channel`을 생략하면 업데이트 정책은
+`stable`이지만, 유효한 stable 태그가 없으면 main으로 자동 전환하지 않습니다.
+
+Windows에서는 같은 submodule을 추가한 뒤 Python 3.10+의 `python`과
+생성된 `harness.cmd`를 사용합니다.
+
+```bat
+python .universal-harness\module\scripts\harness.py --project . install --profile astra --channel edge
+.universal-harness\harness.cmd status
+```
+
+### 이후 평소 사용
 
 ```sh
 ./.universal-harness/harness status
 ./.universal-harness/harness check
+./.universal-harness/harness pull
+./.universal-harness/harness diff
 ./.universal-harness/harness upgrade
 ```
 
@@ -82,7 +119,7 @@ Git 프로젝트에는 원본을 `.universal-harness/module` submodule로 붙일
 실패 시 파일·모듈 커밋 복구를 시도하고, 중단 뒤 수정된 파일은 덮어쓰지 않습니다.
 부모 Git index·commit·전역 설정은 자동 변경하지 않습니다.
 
-Windows용 `harness.cmd`, stable/edge/pinned 선택, 기존 설치본 전환과 복구 절차는
+stable/edge/pinned 선택, 기존 복사형 설치본 전환, 팀 clone, 실패 복구의 상세 절차는
 [프로젝트 모듈·wrapper 가이드](docs/LIFECYCLE.md)를 참고하십시오.
 아래의 기존 복사형 설치기도 유지하며, Git이 없는 프로젝트에서 사용할 수 있습니다.
 
