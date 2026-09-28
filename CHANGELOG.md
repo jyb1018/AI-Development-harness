@@ -2,6 +2,19 @@
 
 ## Unreleased
 
+### 프로젝트 모듈과 lifecycle wrapper
+
+- 선택형 Git submodule과 프로젝트 내부 Unix/Windows wrapper를 추가합니다.
+  `install`, `status`, `check`, `diff`, `pull`, `upgrade`, `doctor`, `recover`를 제공합니다.
+- source checkout, 부모 gitlink, applied revision을 구분합니다. pull은 적용된 지침과
+  실행기를 바꾸지 않고, upgrade는 immutable snapshot에서 충돌 검사 후 함께 적용합니다.
+- 프로젝트 소유 config와 MODULE lock을 분리하고 기존 installer STATE schema 3을 유지합니다.
+  stable 태그/edge main/pinned SHA를 지원하며 암묵적 fallback이나 stable 자동 강등은 하지 않습니다.
+- 적용 파일과 모듈 커밋의 복구 journal, 병렬 명령 잠금, 후속 사용자 수정 보호를 추가합니다.
+  완전한 파일시스템 트랜잭션이나 신뢰하지 않는 upstream 실행의 sandbox는 아닙니다.
+- 실제 로컬 Git/submodule/설치기 기반 검사 50개와 미실행 행동 시나리오 8개를 추가합니다.
+  기존 설치기·스킬·프로필·버전은 유지하며 merge/release/전역 설치/다른 실제 프로젝트 적용은 하지 않습니다.
+
 ### 프로젝트 소유 AGENTS와 관리 블록
 
 - AGENTS 전체 소유권을 작은 bootstrap 블록의 SHA-256 소유권으로 바꿉니다.

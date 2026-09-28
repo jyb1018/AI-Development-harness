@@ -64,6 +64,28 @@ Karpathy식 가정 확인·작은 변경·결과 검증을 핵심에 통합하�
 공식 지침과 실제 작업 결과를 분리하고, 모델·호스트·하네스를 따로 비교합니다.
 현재 상태는 **구성/설치 검증 대상이며 Sol/Astra 실사용 성능 인증은 미수행**입니다.
 
+## 선택형 프로젝트 모듈 — wrapper로 업데이트합니다
+
+Git 프로젝트에는 원본을 `.universal-harness/module` submodule로 붙일 수 있습니다.
+최초 1회 module의 lifecycle install을 실행하면 프로젝트 내부 wrapper가 생성됩니다.
+이후 별도 clone 경로나 전역 PATH 설정 없이 다음처럼 사용합니다.
+
+```sh
+./.universal-harness/harness status
+./.universal-harness/harness check
+./.universal-harness/harness upgrade
+```
+
+`pull`은 소스만 받으며 **지침과 wrapper 실행기는 바꾸지 않습니다**. `upgrade`는 후보를 받아
+도메인 지침·관리 파일의 충돌을 검사한 뒤 적용합니다. `upgrade --offline`은 이미 받은 소스,
+`upgrade --dry-run`은 네트워크 없이 현재 소스의 적용 계획만 사용합니다.
+실패 시 파일·모듈 커밋 복구를 시도하고, 중단 뒤 수정된 파일은 덮어쓰지 않습니다.
+부모 Git index·commit·전역 설정은 자동 변경하지 않습니다.
+
+Windows용 `harness.cmd`, stable/edge/pinned 선택, 기존 설치본 전환과 복구 절차는
+[프로젝트 모듈·wrapper 가이드](docs/LIFECYCLE.md)를 참고하십시오.
+아래의 기존 복사형 설치기도 유지하며, Git이 없는 프로젝트에서 사용할 수 있습니다.
+
 ## 설치 — 빈 프로젝트도 지원합니다
 
 Python 3.10 이상이면 됩니다. **이 저장소는 완전한 설치 원본이며, 이전 하네스나 스킬이 필요하지 않습니다.**
