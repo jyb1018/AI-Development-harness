@@ -234,7 +234,7 @@ class ToolingInstallTests(unittest.TestCase):
         self.package.mkdir()
         self.meta = json.loads((ROOT / 'harness.json').read_text(encoding='utf-8'))
         self.write_meta()
-        for path in ('AGENTS.template.md', 'scripts/tooling.py', 'integrations/tooling.json', 'docs/TOOLING.md'):
+        for path in ('AGENTS.template.md', 'AGENTS.bootstrap.md', 'scripts/tooling.py', 'integrations/tooling.json', 'docs/TOOLING.md'):
             dest = self.package / path
             dest.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(ROOT / path, dest)
@@ -281,7 +281,7 @@ class ToolingInstallTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertEqual(len(json.loads(result.stdout)['skills']), len(self.meta['skills']))
 
-    def test_managed_v2_state_upgrades_without_schema_rewrite(self):
+    def test_managed_v2_state_migrates_to_block_ownership(self):
         self.install()
         state_path = self.target / installer.STATE
         state = json.loads(state_path.read_text())
@@ -292,9 +292,16 @@ class ToolingInstallTests(unittest.TestCase):
         core.write_text('# Old managed core', encoding='utf-8')
         state['files']['AGENTS.md'] = installer.digest(core.read_bytes())
         state['version'] = '2.0.2'
+        state['schema_version'] = 2
+        state.pop('agents')
+        state['core_status'] = 'managed'
+        (self.target / installer.CORE).unlink()
+        state['files'].pop(installer.CORE)
         state_path.write_text(json.dumps(state), encoding='utf-8')
         upgraded = self.install(upgrade=True)
-        self.assertEqual(upgraded['schema_version'], 2)
+        self.assertEqual(upgraded['schema_version'], 3)
+        self.assertNotIn('AGENTS.md', upgraded['files'])
+        self.assertIn(installer.CORE, upgraded['files'])
         self.assertEqual(upgraded['version'], '3.0.0')
         self.assertTrue((self.target / '.universal-harness/tooling.py').exists())
 

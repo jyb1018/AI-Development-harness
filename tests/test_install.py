@@ -26,11 +26,13 @@ class InstallTests(unittest.TestCase):
 
     def test_fresh_install(self):
         state = self.run_install(profile='astra')
-        self.assertEqual(state['core_status'], 'managed')
+        self.assertEqual(state['core_status'], 'managed_block')
         expected = json.loads((installer.ROOT / 'harness.json').read_text(encoding='utf-8'))['skills']
         actual = {p.parent.name for p in (self.target / '.agents/skills').glob('*/SKILL.md')}
         self.assertEqual(actual, set(expected))
         self.assertEqual((self.target / 'AGENTS.md').read_bytes(),
+                         (installer.ROOT / 'AGENTS.bootstrap.md').read_bytes().replace(b'\r\n', b'\n'))
+        self.assertEqual((self.target / installer.CORE).read_bytes(),
                          (installer.ROOT / 'AGENTS.template.md').read_bytes())
         self.assertFalse((self.target / '.github').exists())
         self.assertFalse((self.target / 'docs').exists())
@@ -42,9 +44,10 @@ class InstallTests(unittest.TestCase):
     def test_preserve_existing_agents(self):
         (self.target / 'AGENTS.md').write_text('# User rules\n', encoding='utf-8')
         state = self.run_install()
-        self.assertEqual(state['core_status'], 'manual_merge_required')
-        self.assertEqual((self.target / 'AGENTS.md').read_text(), '# User rules\n')
-        self.assertTrue((self.target / installer.PROPOSAL).exists())
+        self.assertEqual(state['core_status'], 'managed_block')
+        self.assertTrue((self.target / 'AGENTS.md').read_text().startswith('# User rules\n'))
+        self.assertEqual((self.target / 'AGENTS.md').read_bytes().count(installer.BEGIN), 1)
+        self.assertFalse((self.target / installer.PROPOSAL).exists())
         self.assertNotIn('AGENTS.md', state['files'])
 
     def test_idempotent(self):

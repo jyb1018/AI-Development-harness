@@ -48,7 +48,11 @@ class DistributionTests(unittest.TestCase):
         self.assertEqual(state['profile'], profile)
         self.assertEqual(state['version'], meta['version'])
         self.assertEqual((target / 'AGENTS.md').read_bytes(),
+                         (package / 'AGENTS.bootstrap.md').read_bytes().replace(b'\r\n', b'\n'))
+        self.assertEqual((target / '.universal-harness/CORE.md').read_bytes(),
                          (package / 'AGENTS.template.md').read_bytes())
+        self.assertEqual(state['schema_version'], 3)
+        self.assertNotIn('AGENTS.md', state['files'])
         self.assertEqual((target / '.universal-harness/profile.md').read_bytes(),
                          (package / f'profiles/{profile}.md').read_bytes())
         actual = {p.parent.name for p in (target / '.agents/skills').glob('*/SKILL.md')}
@@ -93,7 +97,7 @@ class DistributionTests(unittest.TestCase):
 
     def test_partial_source_is_preflighted(self):
         for index, missing in enumerate(('skills/uh-review/SKILL.md',
-                                         'profiles/astra.md', 'AGENTS.template.md',
+                                         'profiles/astra.md', 'AGENTS.template.md', 'AGENTS.bootstrap.md',
                                          'harness.json')):
             with self.subTest(missing=missing):
                 package = self.visible_copy(f'partial-{index}')

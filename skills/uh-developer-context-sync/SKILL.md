@@ -6,6 +6,7 @@ description: Help a human understand an unfamiliar project (ONBOARD), recover co
 
 1. Resolve the actual repository, applicable instructions, requested scope and
    available evidence. Read relevant code/tests and existing architecture/ADR docs.
+   Prioritize project-owned invariants/approvals; generic defaults cannot waive them.
    Freeze the inspected revision; report staged, unstaged and relevant untracked
    work separately. Do not execute application code, install tools, call models,
    upload source or change product files merely to explain them.

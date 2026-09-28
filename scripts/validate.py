@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def validate(root: Path) -> list[str]:
     errors = []
-    required = ['README.md', 'LICENSE', 'VERSION', 'AGENTS.md', 'AGENTS.template.md',
+    required = ['README.md', 'LICENSE', 'VERSION', 'AGENTS.md', 'AGENTS.template.md', 'AGENTS.bootstrap.md',
                 'harness.json', 'docs/SOURCES.md', 'docs/ADOPTION.md', 'docs/MIGRATION.md',
                 'docs/MODELS.md', 'docs/MODEL-UPGRADES.md', 'evals/README.md', 'evals/cases.json',
                 'evals/run-record.template.json', 'scripts/install.py', 'scripts/validate.py', '.github/workflows/validate.yml',
@@ -32,6 +32,10 @@ def validate(root: Path) -> list[str]:
             errors.append('Unsupported schema')
         if meta['version'] != (root / 'VERSION').read_text(encoding='utf-8').strip():
             errors.append('Version mismatch')
+        if meta.get('bootstrap') != 'AGENTS.bootstrap.md' or meta.get('core') != 'AGENTS.template.md':
+            errors.append('Invalid core/bootstrap source mapping')
+        from install import bootstrap_block
+        bootstrap_block((root / 'AGENTS.bootstrap.md').read_bytes())
         core = root / meta['core']
         if core.stat().st_size > meta['limits']['core_bytes']:
             errors.append('Core exceeds instruction budget')

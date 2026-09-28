@@ -13,7 +13,10 @@ import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
 STATE = '.universal-harness/STATE.json'
-PROPOSAL = '.universal-harness/AGENTS.proposed.md'
+PROPOSAL = '.universal-harness/AGENTS.proposed.md'  # Legacy; never overwrite/delete.
+CORE = '.universal-harness/CORE.md'
+BEGIN = b'<!-- UNIVERSAL-HARNESS:BEGIN -->'
+END = b'<!-- UNIVERSAL-HARNESS:END -->'
 
 
 def digest(data: bytes) -> str:
@@ -54,12 +57,121 @@ def read_state(target: Path) -> dict:
     if not path.exists():
         return {'schema_version': 2, 'files': {}}
     state = json.loads(path.read_text(encoding='utf-8'))
-    if (not isinstance(state, dict) or state.get('schema_version') != 2 or not isinstance(state.get('files'), dict)
+    if (not isinstance(state, dict) or state.get('schema_version') not in (2, 3) or not isinstance(state.get('files'), dict)
             or not all(isinstance(k, str) and isinstance(v, str)
                        and re.fullmatch(r'[0-9a-f]{64}', v)
                        for k, v in state['files'].items())):
         raise ValueError('Invalid installer state; inspect it before retrying')
+    if state['schema_version'] == 3:
+        block = state.get('agents')
+        if (not isinstance(block, dict) or block.get('mode') != 'managed_block'
+                or not isinstance(block.get('sha256'), str)
+                or not re.fullmatch(r'[0-9a-f]{64}', block['sha256'])
+                or 'AGENTS.md' in state['files']):
+            raise ValueError('Invalid managed-block state; inspect it before retrying')
     return state
+
+
+def managed_span(data: bytes) -> tuple[int, int] | None:
+    """Return the exact owned byte range, excluding the END line terminator.
+
+    Reserved markers must form one standalone, ordered, unfenced pair.
+    Never interpret an example inside a Markdown code fence as an active block.
+    """
+    data.decode('utf-8-sig')  # Refuse unsupported encodings before any writes.
+    if b'UNIVERSAL-HARNESS:' not in data:
+        return None
+    if (data.count(b'UNIVERSAL-HARNESS:') != 2
+            or data.count(BEGIN) != 1 or data.count(END) != 1):
+        raise ValueError('Malformed or duplicate AGENTS.md managed markers')
+    positions = {}
+    offset = 0
+    fence = None
+    for line in data.splitlines(keepends=True):
+        text = line.rstrip(b'\r\n')
+        bom = 3 if offset == 0 and text.startswith(b'\xef\xbb\xbf') else 0
+        text = text[bom:]
+        marker = BEGIN if BEGIN in text else END if END in text else None
+        if marker is not None:
+            if text != marker or fence is not None:
+                raise ValueError('Managed markers must be standalone and outside code fences')
+            positions[marker] = offset + bom
+        match = re.match(rb' {0,3}(`{3,}|~{3,})(.*)$', text)
+        if match:
+            run, tail = match.groups()
+            if fence is None:
+                fence = (run[:1], len(run))
+            elif run[:1] == fence[0] and len(run) >= fence[1] and not tail.strip():
+                fence = None
+        offset += len(line)
+    if set(positions) != {BEGIN, END} or positions[BEGIN] >= positions[END]:
+        raise ValueError('Reversed or malformed AGENTS.md managed markers')
+    return positions[BEGIN], positions[END] + len(END)
+
+
+def bootstrap_block(raw: bytes) -> bytes:
+    """The distributed template contains only a small, portable bootstrap."""
+    raw = raw.replace(b'\r\n', b'\n')
+    span = managed_span(raw)
+    if (span is None or span[0] != 0 or raw[span[1]:] not in (b'', b'\n')
+            or len(raw) > 1500 or b'.universal-harness/CORE.md' not in raw
+            or b'.universal-harness/profile.md' not in raw):
+        raise ValueError('Invalid AGENTS.bootstrap.md; expected only the bootstrap block')
+    return raw[:span[1]]
+
+
+def plan_agents(current: bytes | None, previous: dict, template: bytes,
+                upgrade: bool, adopt: bool = False) -> tuple[bytes, dict]:
+    """Plan byte-preserving project instructions and hash-owned bootstrap only."""
+    block = bootstrap_block(template)
+    def conflict(reason):
+        raise ValueError(
+            'No files written: ' + reason + '\n'
+            'Preserve project rules; manually remove only obsolete harness text, '
+            'then insert one exact block below and rerun with '
+            '--upgrade --adopt-agents-block. Adoption never bypasses other file conflicts.\n'
+            'Suggested block (NOT written):\n' + block.decode('utf-8'))
+
+    owned = previous.get('agents') if previous['schema_version'] == 3 else None
+    legacy = previous['schema_version'] == 2 and bool(
+        previous['files'] or previous.get('core_status'))
+    if legacy and not upgrade:
+        conflict('Legacy installation needs --upgrade for managed-block migration')
+    if current is None:
+        if owned or legacy or adopt:
+            conflict('AGENTS.md is missing; restore/reconcile project instructions first')
+        result = block + b'\n'
+    else:
+        span = managed_span(current)
+        newline = b'\r\n' if b'\r\n' in current else b'\n'
+        if adopt:
+            if span is None or current[span[0]:span[1]].replace(b'\r\n', b'\n') != block:
+                conflict('Adoption requires one exact current bootstrap, not arbitrary edited text')
+            result = current
+        elif owned:
+            if span is None or digest(current[span[0]:span[1]]) != owned['sha256']:
+                conflict('AGENTS.md managed block was edited, removed or reformatted')
+            old = current[span[0]:span[1]]
+            newline = b'\r\n' if b'\r\n' in old else b'\n'
+            replacement = block.replace(b'\n', newline)
+            if old != replacement and not upgrade:
+                conflict('Managed bootstrap update needs --upgrade')
+            result = current[:span[0]] + replacement + current[span[1]:]
+        elif span is not None:
+            conflict('Existing managed markers have no block ownership record')
+        elif 'AGENTS.md' in previous['files']:
+            if digest(current) != previous['files']['AGENTS.md']:
+                conflict('Legacy whole-file AGENTS.md was edited; automatic splitting is unsafe')
+            bom = b'\xef\xbb\xbf' if current.startswith(b'\xef\xbb\xbf') else b''
+            result = bom + block.replace(b'\n', newline) + newline
+        elif legacy:
+            conflict('Legacy project-owned AGENTS.md may contain manually merged harness text')
+        else:
+            # Append, never normalize or relocate project-owned bytes/frontmatter/BOM.
+            separator = newline * 2 if current else b''
+            result = current + separator + block.replace(b'\n', newline) + newline
+    span = managed_span(result)
+    return result, {'mode': 'managed_block', 'sha256': digest(result[span[0]:span[1]])}
 
 
 def require_source_files(relative_paths: list[str]) -> None:
@@ -79,7 +191,7 @@ def require_source_files(relative_paths: list[str]) -> None:
             'Incomplete harness source package; no files written.\n'
             + '\n'.join(f'Missing source: {relative}' for relative in missing)
             + '\nUse a complete repository clone or extracted ZIP containing '
-              'skills/, profiles/, harness.json and AGENTS.template.md. '
+              'skills/, profiles/, harness.json, AGENTS.template.md and AGENTS.bootstrap.md. '
               'Run that copy of scripts/install.py with your empty project as '
               'the target. A .patch or install.py alone is not an installer package.'
         )
@@ -91,6 +203,8 @@ def package_files(profile: str) -> tuple[dict, dict[str, bytes]]:
     if (not isinstance(meta, dict) or meta.get('schema_version') != 2
             or not isinstance(meta.get('profiles'), list) or profile not in meta['profiles']):
         raise ValueError('Unsupported package/profile')
+    if meta.get('core') != 'AGENTS.template.md' or meta.get('bootstrap') != 'AGENTS.bootstrap.md':
+        raise ValueError('Invalid core/bootstrap source mapping')
     names = meta.get('skills')
     limits = meta.get('limits')
     if (not isinstance(names, list) or not names
@@ -101,7 +215,7 @@ def package_files(profile: str) -> tuple[dict, dict[str, bytes]]:
         raise ValueError('Invalid package skill inventory or limits')
     # Visible source payload survives copying without hidden directories.
     # The installed layout remains the host's .agents/skills convention.
-    sources = {'.universal-harness/profile.md': f'profiles/{profile}.md'}
+    sources = {CORE: meta['core'], '.universal-harness/profile.md': f'profiles/{profile}.md'}
     for name in meta['skills']:
         if not re.fullmatch(r'uh-[a-z0-9-]+', name):
             raise ValueError('Invalid skill name')
@@ -109,7 +223,7 @@ def package_files(profile: str) -> tuple[dict, dict[str, bytes]]:
     support = meta.get('support_files', {})
     if not isinstance(support, dict):
         raise ValueError('Invalid support file mapping')
-    reserved = {STATE.casefold(), PROPOSAL.casefold(), '.universal-harness/profile.md'}
+    reserved = {STATE.casefold(), PROPOSAL.casefold(), CORE.casefold(), '.universal-harness/profile.md'}
     seen = set()
     for destination, source in support.items():
         for value in (destination, source):
@@ -122,8 +236,9 @@ def package_files(profile: str) -> tuple[dict, dict[str, bytes]]:
             raise ValueError('Unsafe or colliding support file destination')
         seen.add(key)
         sources[destination] = source
-    require_source_files(['AGENTS.template.md', *sources.values(),
+    require_source_files(['AGENTS.bootstrap.md', *sources.values(),
                           *(['scripts/tooling.py'] if 'uh-tooling' in names else [])])
+    bootstrap_block((ROOT / 'AGENTS.bootstrap.md').read_bytes())
     payload = {rel: (ROOT / source).read_bytes() for rel, source in sources.items()}
     if 'uh-tooling' in names:
         import tooling
@@ -141,7 +256,8 @@ def package_files(profile: str) -> tuple[dict, dict[str, bytes]]:
 
 
 def plan_install(target: Path, profile: str, upgrade: bool,
-                 global_skill_roots: list[Path] | None = None) -> tuple[dict[str, bytes], dict]:
+                 global_skill_roots: list[Path] | None = None,
+                 adopt_agents_block: bool = False) -> tuple[dict[str, bytes], dict]:
     previous = read_state(target)
     meta, wanted = package_files(profile)
     if 'uh-tooling' in meta['skills']:
@@ -159,12 +275,14 @@ def plan_install(target: Path, profile: str, upgrade: bool,
         if scan['warnings']:
             print('SKILL SCAN INCOMPLETE: run tooling doctor --strict; '
                   'unreadable/unsupported definitions were preserved.', file=sys.stderr)
-    core = (ROOT / 'AGENTS.template.md').read_bytes()
     agents = checked_path(target, 'AGENTS.md')
-    core_managed = not agents.exists() or 'AGENTS.md' in previous['files']
-    core_path = 'AGENTS.md' if core_managed else PROPOSAL
-    wanted[core_path] = core
+    current_agents = agents.read_bytes() if agents.exists() else None
+    next_agents, block_state = plan_agents(
+        current_agents, previous, (ROOT / 'AGENTS.bootstrap.md').read_bytes(),
+        upgrade, adopt_agents_block)
     changed = {}
+    if next_agents != current_agents:
+        changed['AGENTS.md'] = next_agents
     conflicts = []
     for rel, data in wanted.items():
         path = checked_path(target, rel)
@@ -183,10 +301,11 @@ def plan_install(target: Path, profile: str, upgrade: bool,
     if conflicts:
         raise ValueError('No files written:\n' + '\n'.join(conflicts))
     state = {
-        'schema_version': 2,
+        'schema_version': 3,
         'version': meta['version'],
         'profile': profile,
-        'core_status': 'managed' if core_managed else 'manual_merge_required',
+        'core_status': 'managed_block',
+        'agents': block_state,
         'files': {rel: digest(data) for rel, data in sorted(wanted.items())},
     }
     state_bytes = (json.dumps(state, indent=2) + '\n').encode('utf-8')
@@ -209,19 +328,31 @@ def atomic_write(path: Path, data: bytes) -> None:
 
 
 def install(target: Path, profile: str, upgrade: bool = False, dry_run: bool = False,
-            global_skill_roots: list[Path] | None = None) -> dict:
+            global_skill_roots: list[Path] | None = None,
+            adopt_agents_block: bool = False) -> dict:
     # Plan all conflicts before creating files. State is written last, per-file atomic.
-    changed, state = plan_install(target, profile, upgrade, global_skill_roots)
+    agents = checked_path(target, 'AGENTS.md')
+    expected_agents = agents.read_bytes() if agents.exists() else None
+    changed, state = plan_install(target, profile, upgrade, global_skill_roots, adopt_agents_block)
+    def check_agents_unchanged():
+        path = checked_path(target, 'AGENTS.md')
+        actual = path.read_bytes() if path.exists() else None
+        if actual != expected_agents:
+            raise ValueError('AGENTS.md changed concurrently; rerun after reviewing local edits')
+
     for rel in changed:
         print(('WOULD WRITE ' if dry_run else 'WRITE ') + rel)
     if not dry_run:
+        check_agents_unchanged()
         for rel, data in changed.items():
+            if rel == 'AGENTS.md':
+                check_agents_unchanged()
             atomic_write(checked_path(target, rel), data)
     print(f"{'DRY RUN' if dry_run else 'FILES INSTALLED'} {state['version']} profile={state['profile']}")
-    if state['core_status'] == 'manual_merge_required':
-        print(f'ACTIVATION PENDING: merge {PROPOSAL} into existing AGENTS.md; it is not auto-loaded.')
-    else:
-        print('Confirm instruction/skill loading in the host; installed files are not a behavioral certification.')
+    print('AGENTS: only the bootstrap block is managed; project instructions remain project-owned.')
+    print('Confirm the host reads .universal-harness/CORE.md and the profile; a reference is not native inclusion.')
+    if (target / PROPOSAL).exists():
+        print(f'LEGACY PROPOSAL PRESERVED: {PROPOSAL}; no longer managed or automatically loaded.')
     old_names = ('thin-process', 'ponytail', 'acceptance-first', 'systematic-debugging',
                  'risk-review', 'external-effects', 'model-drift-audit')
     if any((target / '.agents/skills' / name).exists() for name in old_names):
@@ -238,11 +369,14 @@ def main() -> int:
     parser.add_argument('--profile', choices=('generic', 'sol', 'astra'), default='generic')
     parser.add_argument('--dry-run', action='store_true')
     parser.add_argument('--upgrade', action='store_true')
+    parser.add_argument('--adopt-agents-block', action='store_true',
+                        help='Record ownership of one exact current bootstrap after manual reconciliation; not force')
     parser.add_argument('--global-skill-root', action='append', type=Path,
                         help='Override global roots for collision preflight; repeat as needed')
     args = parser.parse_args()
     try:
-        install(target_root(args.target), args.profile, args.upgrade, args.dry_run, args.global_skill_root)
+        install(target_root(args.target), args.profile, args.upgrade, args.dry_run, args.global_skill_root,
+                args.adopt_agents_block)
         return 0
     except (OSError, ValueError, KeyError, TypeError) as exc:
         print(f'INSTALL FAILED: {exc}', file=sys.stderr)

@@ -2,6 +2,7 @@
   "schema_version": 2,
   "version": "3.0.0",
   "core": "AGENTS.template.md",
+  "bootstrap": "AGENTS.bootstrap.md",
   "profiles": [
     "generic",
     "sol",
