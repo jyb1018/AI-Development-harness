@@ -82,12 +82,13 @@ python3 "$HOME/AI-Development-harness/scripts/install.py" "$HOME/my-new-project"
 
 Git이 없어도 전체 ZIP을 풀고 위 명령의 원본 경로만 바꾸면 됩니다.
 실행 위치는 어디든 가능하며, 대상은 이미 존재하는 빈 폴더여도 됩니다.
-원본에는 `skills/`, `profiles/`, `harness.json`, `AGENTS.template.md`, `scripts/`, `integrations/`, `docs/`가 함께 있어야 합니다.
+원본에는 `skills/`, `profiles/`, `harness.json`, `AGENTS.template.md`, `AGENTS.bootstrap.md`, `scripts/`, `integrations/`, `docs/`가 함께 있어야 합니다.
 
 ```text
 하네스 원본                         설치 후 대상 프로젝트
 skills/uh-*/SKILL.md       ─────→  .agents/skills/uh-*/SKILL.md
-AGENTS.template.md        ─────→  AGENTS.md
+AGENTS.template.md        ─────→  .universal-harness/CORE.md
+AGENTS.bootstrap.md       ─────→  AGENTS.md의 관리 블록만
 profiles/astra.md         ─────→  .universal-harness/profile.md
                                  .universal-harness/STATE.json
 scripts/tooling.py        ─────→  .universal-harness/tooling.py
@@ -96,8 +97,16 @@ docs/TOOLING.md           ─────→  .universal-harness/TOOLING.md
 ```
 
 원본 스킬은 **숨김 폴더가 아닌 `skills/`**에 있습니다. 대상의 `.agents/`는 설치기가 만듭니다.
-기존 `AGENTS.md`가 있으면 보존하고 `.universal-harness/AGENTS.proposed.md`를 만들어
-수동 병합 필요 상태를 알립니다. 기존 스킬·전역 설정·CI·비밀값·프로젝트 코드는 변경하지 않습니다.
+하네스를 처음 넣는 기존 `AGENTS.md`는 원문 바이트를 보존하고 작은 관리 블록만 덧붙입니다.
+범용 본문은 `CORE.md`로 분리하며, 도메인 불변조건·승인 경계·문서 라우팅은 블록 밖에 둡니다.
+블록 밖 수정은 업데이트를 막지 않고, 블록과 다른 관리 파일의 사용자 수정은 충돌로 보호합니다.
+기존 제3자 스킬·전역 설정·CI·비밀값·프로젝트 코드는 변경하지 않습니다.
+
+예전 전체 파일 소유 방식은 수정되지 않은 AGENTS만 `--upgrade`로 자동 이관합니다.
+도메인 지침이 섞인 수정본이나 옛 proposal 방식은 일회성 수동 분리 후
+`--upgrade --adopt-agents-block`으로 정확한 bootstrap만 등록합니다. 새 STATE는 schema 3이며,
+구버전 설치기의 전체 파일 재적용을 거부합니다. [관리 블록·이관 가이드](docs/MANAGED-AGENTS.md)를 참고하십시오.
+bootstrap은 native include가 아니므로 호스트에서 CORE와 profile을 실제로 읽는지도 확인하십시오.
 
 ```sh
 # v2 기존 설치 업데이트: 사용자가 수정한 파일은 덮어쓰지 않습니다.

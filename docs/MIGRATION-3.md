@@ -1,8 +1,10 @@
-# 2.x → 3.0 이관
+# 2.x → 3.x 이관
 
-3.0은 기존 core의 권한/검증 경계, 7개 uh-* 스킬, Sol/Astra/generic 프로필을 유지하고
-선택형 `uh-tooling`과 3개의 support 파일을 추가합니다. 저장소 VERSION은 3.0.0이지만
-설치 STATE와 harness manifest의 `schema_version: 2`는 하위 호환을 위해 유지합니다.
+3.0 최초 배포는 기존 core의 권한/검증 경계, 7개 uh-* 스킬, Sol/Astra/generic 프로필을
+유지하고 선택형 `uh-tooling`과 3개의 support 파일을 추가했습니다.
+현재 선택형 Human Context 스킬과 관리 블록 확장도 함께 설치됩니다.
+하네스 manifest schema는 2를 유지하지만, **새 설치 STATE는 블록 소유권을 기록하는 schema 3**입니다.
+기존 schema 2는 안전한 이관을 위해 읽을 수 있습니다.
 전역 설정을 바꾸거나 기존 제3자 스킬을 제거하는 마이그레이션은 하지 않습니다.
 
 ## 적용
@@ -18,8 +20,14 @@ python3 .universal-harness/tooling.py doctor . --strict
 
 기존 profile을 유지하십시오. Sol은 `--profile sol`, 모델 중립은 `--profile generic`입니다.
 빈 프로젝트는 `--upgrade` 없이 설치합니다. 사용자 수정이 없는 관리 파일만 업그레이드되며,
-수정된 AGENTS/스킬/support 파일 하나라도 충돌하면 **계획 단계에서 전체 쓰기를 중단**합니다.
-관리되지 않는 기존 AGENTS.md는 그대로 두고 AGENTS.proposed.md를 만들어 수동 병합을 요구합니다.
+관리 블록/CORE/스킬/support 파일 하나라도 충돌하면 **계획 단계에서 전체 쓰기를 중단**합니다.
+블록 밖 프로젝트 지침 수정은 충돌이 아니며 그대로 보존됩니다.
+
+이전 AGENTS 전체가 설치 당시 해시와 같으면 작은 bootstrap으로 바꾸고 범용 본문은
+`.universal-harness/CORE.md`에 설치합니다. 수정된 전체 파일이나 옛 proposal 방식의 설치는
+일회성 수동 분리가 필요합니다. 출력된 정확한 블록을 넣은 뒤 `--upgrade --adopt-agents-block`을
+사용합니다. 임의의 블록을 강제 등록하거나 도메인 문장을 추측해 지우지 않습니다.
+[상태별 동작·이관·복구 가이드](MANAGED-AGENTS.md)를 참고하십시오.
 
 ## 글로벌 승격 스킬
 
@@ -51,3 +59,5 @@ GitHub/Codex Security plugin 또는 Serena가 보이지 않아도 하네스를 �
 롤백 자동화는 제공하지 않습니다. 버전 관리된 하네스 변경만 검토해 되돌리며,
 사용자의 다른 변경이나 전역 스킬을 삭제하지 않습니다. STATE.json과 관리 파일을
 서로 다른 버전으로 임의 조합하지 마십시오.
+schema 2 전용 구버전 설치기는 새 schema 3을 거부합니다. 상태 숫자만 낮춰 실행하지 말고,
+이후 추가한 프로젝트 지침을 보존하면서 관리 파일·상태를 함께 검토해 복구하십시오.

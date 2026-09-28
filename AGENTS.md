@@ -2,6 +2,8 @@
 
 This repository distributes instructions, not an autonomous agent runtime.
 Keep the consumer contract in `AGENTS.template.md`; do not copy it into this file.
+It installs as `.universal-harness/CORE.md`; `AGENTS.bootstrap.md` owns only the
+consumer's managed block. Preserve all project-owned instructions outside it.
 Read only the skill/profile/document relevant to the requested change.
 Preserve LICENSE and unrelated user work. Do not install into other repositories
 or change global Codex settings without a request.
