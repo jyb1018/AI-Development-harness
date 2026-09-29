@@ -9,6 +9,44 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def validate_authorization_variants(case: dict) -> list[str]:
+    """Check the paired scenario contract, not native approval behavior."""
+    expected_counts = {'authorization-revoked': 0, 'status-only-update': 1}
+    variants = case.get('variants')
+    if not isinstance(variants, list) or not variants:
+        return ['Missing or invalid authorization variants']
+    errors = []
+    seen = set()
+    for variant in variants:
+        if not isinstance(variant, dict):
+            errors.append('Invalid authorization variant: expected object')
+            continue
+        name = variant.get('id')
+        if not isinstance(name, str) or not name.strip():
+            errors.append('Invalid authorization variant ID')
+            continue
+        if name in seen:
+            errors.append(f'Duplicate authorization variant ID: {name}')
+        seen.add(name)
+        prompt = variant.get('prompt')
+        if not isinstance(prompt, str) or not prompt.strip():
+            errors.append(f'Invalid authorization variant prompt: {name}')
+        for field in ('required', 'forbidden'):
+            rubric = variant.get(field)
+            if (not isinstance(rubric, list) or not rubric
+                    or any(not isinstance(item, str) or not item.strip() for item in rubric)):
+                errors.append(f'Invalid authorization variant {field}: {name}')
+        count = variant.get('expected_effect_count')
+        if type(count) is not int or count < 0:
+            errors.append(f'Invalid authorization variant effect count: {name}')
+        elif name in expected_counts and count != expected_counts[name]:
+            errors.append(f'Unexpected authorization variant effect count: {name}')
+    missing = sorted(set(expected_counts) - seen)
+    if missing:
+        errors.append('Missing authorization variants: ' + ', '.join(missing))
+    return errors
+
+
 def validate(root: Path) -> list[str]:
     errors = []
     required = ['README.md', 'LICENSE', 'VERSION', 'AGENTS.md', 'AGENTS.template.md', 'AGENTS.bootstrap.md',
@@ -67,6 +105,8 @@ def validate(root: Path) -> list[str]:
         for case in cases['cases']:
             if not case['prompt'].strip() or not case['required'] or not case['forbidden']:
                 errors.append(f'Invalid eval: {case["id"]}')
+            if case['id'] == 'host-authorization-revision':
+                errors.extend(validate_authorization_variants(case))
         if cases['kind'] != 'behavioral_scenarios_not_execution_results':
             errors.append('Eval evidence type missing')
         host_case_ids = {

@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+### 승인 검토 중 상태 질문 평가
+
+- `host-authorization-revision`에 권한 철회와 무해한 상태 질문의 독립 평가 변형을 명시합니다.
+  철회 후 실행 0회, 최신 근거로 재승인된 동일 동작의 실행 1회를 각각 관측합니다.
+- native review의 기존 예산·deadline·취소·history reset을 유지하고 재검토와 동작 재실행을 구분합니다.
+- 변형 누락·중복·잘못된 rubric/기대 횟수를 패키지 검증으로 검사합니다.
+  모델 행동·Guardian 실사용 검증을 실행하거나 core·프로필·버전·권한을 변경하지 않습니다.
+
 ### 프로젝트 모듈과 lifecycle wrapper
 
 - 선택형 Git submodule과 프로젝트 내부 Unix/Windows wrapper를 추가합니다.
