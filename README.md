@@ -62,7 +62,8 @@ Karpathy식 가정 확인·작은 변경·결과 검증을 핵심에 통합하�
 **“5.5 → 5.6이 실패를 일으켰다”는 인과관계는 검증되지 않았습니다.**
 이 패키지는 특정 모델의 성격에 대한 단정을 규칙으로 만들지 않습니다.
 공식 지침과 실제 작업 결과를 분리하고, 모델·호스트·하네스를 따로 비교합니다.
-현재 상태는 **구성/설치 검증 대상이며 Sol/Astra 실사용 성능 인증은 미수행**입니다.
+현재 상태는 구성/설치 검증에 더해 **Sol/Astra Medium consumer 행동 관찰이 1회씩 존재**합니다.
+다만 profile 인과 효과·모델 성능 인증·native denial 전체 검증은 미수행입니다.
 
 ## 선택형 프로젝트 모듈 — wrapper로 업데이트합니다
 
@@ -217,8 +218,10 @@ python3 -m unittest discover -s tests -v
 ```
 
 CI는 구조·링크·설치기 회귀만 검사합니다. 모델을 호출하거나 유료 사용량을 발생시키지 않습니다.
-[행동 평가](evals/README.md)는 별도입니다. 고정 사례에 대한 실제 실행 기록 없이
-“Sol/Astra 검증 완료” 또는 속도·품질 개선 수치를 만들지 않습니다.
+[행동 평가](evals/README.md)는 별도입니다. 2026-09-29에 Sol/Astra Medium consumer
+pilot에서 bootstrap → CORE/profile read와 A/B/C1 로컬 acceptance를 관찰했지만,
+[profile 인과성은 확립하지 않았습니다](evals/profile-medium-2026-09-29.md).
+이 제한된 관찰을 “모델 성능 인증”이나 전체 행동 PASS로 확대하지 않습니다.
 3.0은 [도구 관련 행동 시나리오 12개](evals/tooling-cases.json)를 추가하며, 기존 host 회귀 사례를 유지합니다.
 
 ## 모델 업데이트 알림

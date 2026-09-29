@@ -25,8 +25,8 @@
     "skill_bytes": 4000
   },
   "behavioral_validation": {
-    "sol": "not_run",
-    "astra": "not_run"
+    "sol": "observed_medium_not_attributable",
+    "astra": "observed_medium_not_attributable"
   },
   "runtime_configuration_managed": false,
   "upstream_plugins_vendored": false,
@@ -37,5 +37,6 @@
     ".universal-harness/TOOLING.md": "docs/TOOLING.md"
   },
   "tooling_evaluation_cases": "evals/tooling-cases.json",
-  "human_context_evaluation_cases": "evals/human-context-cases.json"
+  "human_context_evaluation_cases": "evals/human-context-cases.json",
+  "behavioral_validation_report": "evals/profile-medium-2026-09-29.md"
 }

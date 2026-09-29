@@ -70,6 +70,16 @@ def validate(root: Path) -> list[str]:
             errors.append('Unsupported schema')
         if meta['version'] != (root / 'VERSION').read_text(encoding='utf-8').strip():
             errors.append('Version mismatch')
+        behavioral = meta.get('behavioral_validation')
+        allowed_behavioral = {'not_run', 'observed_medium_not_attributable'}
+        if (not isinstance(behavioral, dict) or set(behavioral) != {'sol', 'astra'}
+                or any(value not in allowed_behavioral for value in behavioral.values())):
+            errors.append('Invalid behavioral validation state')
+        elif any(value != 'not_run' for value in behavioral.values()):
+            report = meta.get('behavioral_validation_report')
+            if (not isinstance(report, str) or not report.startswith('evals/')
+                    or not (root / report).is_file()):
+                errors.append('Missing behavioral validation report')
         if meta.get('bootstrap') != 'AGENTS.bootstrap.md' or meta.get('core') != 'AGENTS.template.md':
             errors.append('Invalid core/bootstrap source mapping')
         from install import bootstrap_block
