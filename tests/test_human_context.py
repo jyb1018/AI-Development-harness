@@ -97,8 +97,18 @@ class HumanContextContractTests(unittest.TestCase):
                 continue
             self.assertTrue((guide.parent / target.split('#', 1)[0]).exists(), target)
 
-    def test_no_behavioral_certification_is_added(self):
-        self.assertEqual(self.meta['behavioral_validation'], {'sol': 'not_run', 'astra': 'not_run'})
+    def test_behavioral_observation_is_scoped_not_certified(self):
+        expected = {
+            'sol': 'observed_medium_not_attributable',
+            'astra': 'observed_medium_not_attributable',
+        }
+        self.assertEqual(self.meta['behavioral_validation'], expected)
+        report = self.meta['behavioral_validation_report']
+        self.assertEqual(report, 'evals/profile-medium-2026-09-29.md')
+        text = (ROOT / report).read_text(encoding='utf-8')
+        self.assertIn('ATTRIBUTABLE | **NO** | **NO**', text)
+        self.assertIn('native host approval denial', text)
+        self.assertIn('NOT RUN', text)
 
 
 class HumanDiagramRouteTests(unittest.TestCase):

@@ -2,6 +2,18 @@
 
 ## Unreleased
 
+### Sol / Astra Medium 실사용 관찰
+
+- 동일한 보고 fixture revision에서 Sol / Medium + sol profile과 Astra / Medium + astra profile의
+  별도 top-level consumer 실행 결과를 기록합니다. 두 실행 모두 routine, local integration,
+  project approval boundary의 로컬 acceptance를 통과했습니다.
+- bootstrap → CORE/profile 실제 read와 profile-consistent behavior를 `OBSERVED`로 기록하되,
+  generic/no-profile 통제군이 없어 profile 인과 효과는 `NOT ATTRIBUTABLE`로 유지합니다.
+- `harness.json` 상태를 `observed_medium_not_attributable`로 갱신하고 상세 evaluation report를 연결합니다.
+  native host denial, X-High, 모델 성능 우열과 광범위한 provider/runtime 인증은 포함하지 않습니다.
+- 한 실행에서 관측된 2.0.2 run-record artifact는 현재 main의 3.0.0 template과 불일치하므로
+  repository template 회귀가 아니라 provenance gap으로 기록합니다.
+
 ### 승인 검토 중 상태 질문 평가
 
 - `host-authorization-revision`에 권한 철회와 무해한 상태 질문의 독립 평가 변형을 명시합니다.

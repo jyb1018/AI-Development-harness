@@ -13,7 +13,19 @@ Universal Harness는 프롬프트/스킬 층입니다. 모델, Codex 런타임, 
 | 기본 실행 | 한 작업 책임자; 분리 가능한 경우 선택 위임 | 동일 |
 | 주요 점검 | source-only 완료, 의미 없는 검증 반복, effort 비용 | 지침 충돌, 과도한 질문·중단, 실제 도구 결과 확인 |
 | 모델/effort 설정 | 기존 유효 설정에서 시작해 평가 | 기존 유효 설정을 우선 비교; 지원 값은 호스트에서 확인 |
-| 성능 인증 | 미실행 | 미실행 |
+| 행동 관찰 | Medium consumer pilot 관찰; 인과성 미확립 | Medium consumer pilot 관찰; 인과성 미확립 |
+
+## 2026-09-29 Medium consumer pilot
+
+동일한 보고 fixture revision에서 Sol / Medium + sol profile과 Astra / Medium + astra profile을
+각각 별도 top-level consumer 세션으로 실행했습니다. 두 실행 모두 routine, 실제 local
+HTTP→SQLite integration, project-owned approval boundary의 로컬 acceptance를 통과했고,
+bootstrap → CORE/profile 실제 read 경로와 profile-consistent behavior가 관찰됐습니다.
+
+이는 **OBSERVED**이지 **ATTRIBUTABLE**이 아닙니다. generic/no-profile 동일 모델 통제군이 없고
+공통 CORE, project AGENTS, task prompt와 모델 기본 성향이 교란 변수입니다.
+native host approval denial과 X-High 비교도 미실행입니다.
+상세 범위와 증거 한계는 [평가 보고서](../evals/profile-medium-2026-09-29.md)를 참고하십시오.
 
 공식 [5.6 발표](https://openai.com/index/gpt-5-6/)는 병렬 작업 기능을 설명합니다.
 따라서 “강한 모델에는 subagent가 필요 없다”도 보편 규칙이 아닙니다.

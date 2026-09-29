@@ -135,8 +135,18 @@ authorized by this specification.
 
 ## Current status
 
-No complete Sol/Astra controlled comparison is shipped with this repository.
-Installer and structure tests validate the package, not model efficacy.
-`harness.json` deliberately records both model validations as `not_run`.
+A limited top-level consumer pilot was observed on 2026-09-29 for
+GPT-5.6 Sol / Medium + `sol` profile and GPT-6 Astra / Medium + `astra` profile.
+Both used the same reported fixture revision and completed the routine,
+integration and project-approval-boundary cases locally. The bootstrap →
+CORE/profile read path and profile-consistent behavior were observed.
+
+This is **not profile causality or performance certification**: there was no
+generic/no-profile control, native approval denial case, X-High comparison or
+complete provider/host telemetry. See
+[the scoped observation report](profile-medium-2026-09-29.md).
+`harness.json` records this as `observed_medium_not_attributable`, not PASS.
+
+Installer and structure tests still validate the package rather than model efficacy.
 Evaluation is opt-in and may incur costs; this repository never auto-runs paid
 models on pull requests.
